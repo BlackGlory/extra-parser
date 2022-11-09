@@ -8,23 +8,23 @@ yarn add extra-parser
 
 ## API
 ```ts
-interface IToken<T extends string> {
-  type: T
+interface IToken<Type extends string> {
+  type: Type
   value: string
 }
 
-interface INode<T extends string> {
-  type: T
+interface INode<Type extends string> {
+  type: Type
 }
 
-interface ITokenPatternMatch<T extends IToken<string>> {
+interface ITokenPatternMatch<Token extends IToken<string>> {
   consumed: number
-  token: T
+  token: Token
 }
 
-interface INodePatternMatch<T extends INode<string>> {
+interface INodePatternMatch<Node extends INode<string>> {
   consumed: number
-  node: T
+  node: Node
 }
 
 type TokenPattern<Token extends IToken<string>> =

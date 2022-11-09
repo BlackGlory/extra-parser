@@ -1,22 +1,22 @@
 import { Falsy } from '@blackglory/prelude'
 
-export interface IToken<T extends string> {
-  type: T
+export interface IToken<Type extends string> {
+  type: Type
   value: string
 }
 
-export interface INode<T extends string> {
-  type: T
+export interface INode<Type extends string> {
+  type: Type
 }
 
-export interface ITokenPatternMatch<T extends IToken<string>> {
+export interface ITokenPatternMatch<Token extends IToken<string>> {
   consumed: number
-  token: T
+  token: Token
 }
 
-export interface INodePatternMatch<T extends INode<string>> {
+export interface INodePatternMatch<Node extends INode<string>> {
   consumed: number
-  node: T
+  node: Node
 }
 
 export interface ITokenPattern<Token extends IToken<string>> {
