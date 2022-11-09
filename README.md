@@ -64,5 +64,9 @@ function parse<
 function createTokenPatternFromRegExp<TokenType extends string>(
   tokenType: TokenType
 , regExp: RegExp
-): TokenPattern<IToken<TokenType>>
+): ITokenPattern<IToken<TokenType>>
+function createTokenPatternFromRegExp<Token extends IToken<string>>(
+  tokenType: Token['type']
+, regExp: RegExp
+): ITokenPattern<IToken<Token['type']>>
 ```

@@ -5,10 +5,18 @@ import { IToken, ITokenPattern, ITokenPatternMatch } from './types'
 export function createTokenPatternFromRegExp<TokenType extends string>(
   tokenType: TokenType
 , regExp: RegExp
-): ITokenPattern<IToken<TokenType>> {
+): ITokenPattern<IToken<TokenType>>
+export function createTokenPatternFromRegExp<Token extends IToken<string>>(
+  tokenType: Token['type']
+, regExp: RegExp
+): ITokenPattern<IToken<Token['type']>>
+export function createTokenPatternFromRegExp(
+  tokenType: string
+, regExp: RegExp
+): ITokenPattern<IToken<string>> {
   const startsWithRegExp = convertToStartsWithRegExp(regExp)
 
-  return (text: string): ITokenPatternMatch<IToken<TokenType>> | Falsy => {
+  return (text: string): ITokenPatternMatch<IToken<string>> | Falsy => {
     const result = startsWithRegExp.exec(text)
     if (isntNull(result)) {
       const [matchedText] = result
