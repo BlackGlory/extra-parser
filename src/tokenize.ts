@@ -3,7 +3,7 @@ import { ITokenPattern, IToken } from './types'
 
 export function* tokenize<
   Token extends IToken<string>
-, TokenPattern extends ITokenPattern<Token>
+, TokenPattern extends ITokenPattern<Token> = ITokenPattern<Token>
 >(
   text: string
 , patterns: Array<TokenPattern>

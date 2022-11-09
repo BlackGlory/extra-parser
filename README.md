@@ -40,7 +40,7 @@ type NodePattern<
 ```ts
 function tokenize<
   Token extends IToken<string>
-, TokenPattern extends ITokenPattern<Token>
+, TokenPattern extends ITokenPattern<Token> = ITokenPattern<Token>
 >(
   text: string
 , patterns: Array<TokenPattern>
@@ -52,7 +52,7 @@ function tokenize<
 function parse<
   Token extends IToken<string>
 , Node extends INode<string>
-, NodePattern extends INodePattern<Token, Node>
+, NodePattern extends INodePattern<Token, Node> = INodePattern<Token, Node> 
 >(
   tokens: Array<Token>
 , patterns: Array<NodePattern>
