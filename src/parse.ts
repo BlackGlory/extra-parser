@@ -22,6 +22,6 @@ export function* parse<
       }
     }
 
-    throw new Error(`Unknown tokens: ${JSON.stringify(tokens)}`)
+    throw new Error(`Unparseable tokens: ${JSON.stringify(remainingTokens)}`)
   }
 }
