@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.2](https://github.com/BlackGlory/extra-parser/compare/v0.2.1...v0.2.2) (2022-11-09)
+
+
+### Features
+
+* improve `createTokenPatternFromRegExp` ([fac41da](https://github.com/BlackGlory/extra-parser/commit/fac41da8a45588f1aaef85c17b367eba1851a6aa))
+
 ### [0.2.1](https://github.com/BlackGlory/extra-parser/compare/v0.2.0...v0.2.1) (2022-11-09)
 
 ## [0.2.0](https://github.com/BlackGlory/extra-parser/compare/v0.1.0...v0.2.0) (2022-11-09)
