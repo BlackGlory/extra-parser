@@ -1,4 +1,5 @@
 import { createTokenPatternFromRegExp } from '@src/create-token-pattern-from-regexp'
+import { isFunction } from '@blackglory/prelude'
 
 describe('createTokenPatternFromRegExp', () => {
   test('single character match', () => {
@@ -7,15 +8,24 @@ describe('createTokenPatternFromRegExp', () => {
 
     const result = createTokenPatternFromRegExp(tokenType, regExp)
 
-    expect(result).toStrictEqual({
-      tokenType
-    , match: expect.any(Function)
+    expect(isFunction(result)).toBe(true)
+    expect(result('a')).toStrictEqual({
+      consumed: 1
+    , token: {
+        type: tokenType
+      , value: 'a'
+      }
     })
-    expect(result.match('a')).toStrictEqual({ consumed: 1 })
-    expect(result.match('ab')).toStrictEqual({ consumed: 1 })
-    expect(result.match('1')).toStrictEqual({ consumed: 0 })
-    expect(result.match('12')).toStrictEqual({ consumed: 0 })
-    expect(result.match(' a')).toStrictEqual({ consumed: 0 })
+    expect(result('ab')).toStrictEqual({
+      consumed: 1
+    , token: {
+        type: tokenType
+      , value: 'a'
+      }
+    })
+    expect(result('1')).toBeFalsy()
+    expect(result('12')).toBeFalsy()
+    expect(result(' a')).toBeFalsy()
   })
 
   test('multiple character match', () => {
@@ -24,14 +34,23 @@ describe('createTokenPatternFromRegExp', () => {
 
     const result = createTokenPatternFromRegExp(tokenType, regExp)
 
-    expect(result).toStrictEqual({
-      tokenType
-    , match: expect.any(Function)
+    expect(isFunction(result)).toBe(true)
+    expect(result('a')).toStrictEqual({
+      consumed: 1
+    , token: {
+        type: tokenType
+      , value: 'a'
+      }
     })
-    expect(result.match('a')).toStrictEqual({ consumed: 1 })
-    expect(result.match('ab')).toStrictEqual({ consumed: 2 })
-    expect(result.match('1')).toStrictEqual({ consumed: 0 })
-    expect(result.match('12')).toStrictEqual({ consumed: 0 })
-    expect(result.match(' a')).toStrictEqual({ consumed: 0 })
+    expect(result('ab')).toStrictEqual({
+      consumed: 2
+    , token: {
+        type: tokenType
+      , value: 'ab'
+      }
+    })
+    expect(result('1')).toBeFalsy()
+    expect(result('12')).toBeFalsy()
+    expect(result(' a')).toBeFalsy()
   })
 })

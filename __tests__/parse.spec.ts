@@ -5,40 +5,30 @@ import { getError } from 'return-style'
 
 describe('parse', () => {
   test('all known tokens', () => {
-    const pattern1: INodePattern<INode<'Identifier'>> = {
-      nodeType: 'Identifier'
-    , parse(tokens) {
-        const [firstToken, ...restTokens] = tokens
-        if (firstToken.type === 'Alphabet') {
-          const usedRestTokens = toArray(takeUntil(restTokens, x => {
-            return x.type !== 'Alphabet'
-                && x.type !== 'Number'
-          }))
-          const consumed = [firstToken, ...usedRestTokens].length
-          const value = [firstToken, ...usedRestTokens].map(x => x.value).join('')
-          return {
-            consumed
-          , result: {
-              type: 'Identifier'
-            , value
-            }
+    const pattern1: INodePattern<IToken<string>, INode<'Identifier'>> = (tokens) => {
+      const [firstToken, ...restTokens] = tokens
+      if (firstToken.type === 'Alphabet') {
+        const usedRestTokens = toArray(takeUntil(restTokens, x => {
+          return x.type !== 'Alphabet'
+              && x.type !== 'Number'
+        }))
+        const consumed = [firstToken, ...usedRestTokens].length
+        const value = [firstToken, ...usedRestTokens].map(x => x.value).join('')
+        return {
+          consumed
+        , node: {
+            type: 'Identifier'
+          , value
           }
-        } else {
-          return { consumed: 0 }
         }
       }
     }
-    const pattern2: INodePattern<INode<'Fallback'>> = {
-      nodeType: 'Fallback'
-    , parse(tokens) {
-        return {
-          consumed: tokens.length
-        , result: {
-            type: 'Fallback'
-          , result: {
-              value: tokens.map(x => x.value).join('')
-            }
-          }
+    const pattern2: INodePattern<IToken<string>, INode<'Fallback'>> = (tokens) => {
+      return {
+        consumed: tokens.length
+      , node: {
+          type: 'Fallback'
+        , value: tokens.map(x => x.value).join('')
         }
       }
     }
@@ -50,10 +40,10 @@ describe('parse', () => {
       type: 'Number'
     , value: '1'
     }
-    const patterns: Array<INodePattern<INode<string>>> = [pattern1, pattern2]
-    const tokens: Array<IToken<string>> = [token1, token2]
+    const patterns = [pattern1, pattern2]
+    const tokens = [token1, token2]
 
-    const result = toArray(parse(patterns, tokens))
+    const result = toArray(parse(tokens, patterns))
 
     expect(result).toStrictEqual([
       {
@@ -64,29 +54,25 @@ describe('parse', () => {
   })
 
   test('contains unknown tokens', () => {
-    const pattern1: INodePattern<INode<'Identifier'>> = {
-      nodeType: 'Identifier'
-    , parse(tokens) {
-        const [firstToken, ...restTokens] = tokens
-        if (firstToken.type === 'Alphabet') {
-          const usedRestTokens = toArray(takeUntil(restTokens, x => {
-            return x.type !== 'Alphabet'
-                && x.type !== 'Number'
-          }))
-          const consumed = [firstToken, ...usedRestTokens].length
-          const value = [firstToken, ...usedRestTokens].map(x => x.value).join('')
-          return {
-            consumed
-          , result: {
-              type: 'Identifier'
-            , value
-            }
+    const pattern1: INodePattern<IToken<string>, INode<'Identifier'>> = (tokens) => {
+      const [firstToken, ...restTokens] = tokens
+      if (firstToken.type === 'Alphabet') {
+        const usedRestTokens = toArray(takeUntil(restTokens, x => {
+          return x.type !== 'Alphabet'
+              && x.type !== 'Number'
+        }))
+        const consumed = [firstToken, ...usedRestTokens].length
+        const value = [firstToken, ...usedRestTokens].map(x => x.value).join('')
+        return {
+          consumed
+        , node: {
+            type: 'Identifier'
+          , value
           }
-        } else {
-          return { consumed: 0 }
         }
       }
     }
+    
     const token1: IToken<'Alphabet'> = {
       type: 'Alphabet'
     , value: 'a'
@@ -99,49 +85,40 @@ describe('parse', () => {
       type: 'Number'
     , value: '1'
     }
-    const patterns: Array<INodePattern<INode<string>>> = [pattern1]
-    const tokens: Array<IToken<string>> = [token1, token2, token3]
+    const patterns = [pattern1]
+    const tokens = [token1, token2, token3]
 
-    const err = getError(() => toArray(parse(patterns, tokens)))
+    const err = getError(() => toArray(parse(tokens, patterns)))
 
     expect(err).toBeInstanceOf(Error)
   })
 
   test('parse in order', () => {
-    const pattern1: INodePattern<INode<'Identifier'>> = {
-      nodeType: 'Identifier'
-    , parse(tokens) {
-        const [firstToken, ...restTokens] = tokens
-        if (firstToken.type === 'Alphabet') {
-          const usedRestTokens = toArray(takeUntil(restTokens, x => {
-            return x.type !== 'Alphabet'
-                && x.type !== 'Number'
-          }))
-          const consumed = [firstToken, ...usedRestTokens].length
-          const value = [firstToken, ...usedRestTokens].map(x => x.value).join('')
-          return {
-            consumed
-          , result: {
-              type: 'Identifier'
-            , value
-            }
+    const pattern1: INodePattern<IToken<string>, INode<'Identifier'>> = (tokens) => {
+      const [firstToken, ...restTokens] = tokens
+      if (firstToken.type === 'Alphabet') {
+        const usedRestTokens = toArray(takeUntil(restTokens, x => {
+          return x.type !== 'Alphabet'
+              && x.type !== 'Number'
+        }))
+        const consumed = [firstToken, ...usedRestTokens].length
+        const value = [firstToken, ...usedRestTokens].map(x => x.value).join('')
+        return {
+          consumed
+        , node: {
+            type: 'Identifier'
+          , value
           }
-        } else {
-          return { consumed: 0 }
         }
       }
     }
-    const pattern2: INodePattern<INode<'Fallback'>> = {
-      nodeType: 'Fallback'
-    , parse(tokens) {
-        return {
-          consumed: tokens.length
-        , result: {
-            type: 'Fallback'
-          , result: {
-              value: tokens.map(x => x.value).join('')
-            }
-          }
+    
+    const pattern2: INodePattern<IToken<string>, INode<'Fallback'>> = (tokens) => {
+      return {
+        consumed: tokens.length
+      , node: {
+          type: 'Fallback'
+        , value: tokens.map(x => x.value).join('')
         }
       }
     }
@@ -153,10 +130,10 @@ describe('parse', () => {
       type: 'Number'
     , value: '1'
     }
-    const patterns: Array<INodePattern<INode<string>>> = [pattern1, pattern2]
-    const tokens: Array<IToken<string>> = [token1, token2]
+    const patterns = [pattern1, pattern2]
+    const tokens = [token1, token2]
 
-    const result = toArray(parse(patterns, tokens))
+    const result = toArray(parse(tokens, patterns))
 
     expect(result).toStrictEqual([
       {

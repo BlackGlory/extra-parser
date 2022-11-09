@@ -1,22 +1,22 @@
+import { isntFalsy } from '@blackglory/prelude'
 import { IToken, INodePattern, INode } from './types'
 
-export function* parse<T extends string, U extends string>(
-  patterns: Array<INodePattern<INode<T>>>
-, tokens: Array<IToken<U>>
-): IterableIterator<INode<T>> {
+export function* parse<
+  Token extends IToken<string>
+, Node extends INode<string>
+, NodePattern extends INodePattern<Token, Node>
+>(
+  tokens: Array<Token>
+, patterns: Array<NodePattern>
+): IterableIterator<Node> {
   let i = 0
   loop: while (i < tokens.length) {
     const remainingTokens = tokens.slice(i)
 
-    for (const { nodeType, parse } of patterns) {
-      const result = parse(remainingTokens)
-      if (result.consumed > 0) {
-        const node: INode<T> = {
-          type: nodeType
-        , ...result.result
-        }
-        yield node
-
+    for (const pattern of patterns) {
+      const result = pattern(remainingTokens)
+      if (isntFalsy(result)) {
+        yield result.node
         i += result.consumed
         continue loop
       }

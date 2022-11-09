@@ -1,3 +1,5 @@
+import { Falsy } from '@blackglory/prelude'
+
 export interface IToken<T extends string> {
   type: T
   value: string
@@ -7,28 +9,23 @@ export interface INode<T extends string> {
   type: T
 }
 
-export interface ITokenPattern<T extends IToken<any>> {
-  tokenType: T['type']
-
-  /**
-   * 当函数返回的consumed大于0时表示匹配.
-   */
-  match: (text: string) => {
-    consumed: number
-  }
+export interface ITokenPatternMatch<T extends IToken<string>> {
+  consumed: number
+  token: T
 }
 
-/**
- * 节点模式是一种接口, 它提供的parse方法将被用于尝试消耗给定的IToken[].
- */
-export interface INodePattern<T extends INode<any>> {
-  nodeType: T['type']
+export interface INodePatternMatch<T extends INode<string>> {
+  consumed: number
+  node: T
+}
 
-  /**
-   * 当函数返回的consumed大于0时表示匹配.
-   */
-  parse: (tokens: Array<IToken<any>>) => {
-    consumed: number
-    result?: Omit<T, 'type'>
-  }
+export interface ITokenPattern<Token extends IToken<string>> {
+  (text: string): ITokenPatternMatch<Token> | Falsy
+}
+
+export interface INodePattern<
+  Token extends IToken<string>
+, Node extends INode<string>
+> {
+  (tokens: Array<Token>): INodePatternMatch<Node> | Falsy
 }

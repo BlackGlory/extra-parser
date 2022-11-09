@@ -10,7 +10,7 @@ describe('tokenize', () => {
     const patterns = [pattern1, pattern2]
     const text = 'a1b2'
 
-    const result = toArray(tokenize(patterns, text))
+    const result = toArray(tokenize(text, patterns))
 
     expect(result).toStrictEqual([
       {
@@ -38,7 +38,7 @@ describe('tokenize', () => {
     const patterns = [pattern1, pattern2]
     const text = 'a1 b2'
 
-    const err = getError(() => toArray(tokenize(patterns, text)))
+    const err = getError(() => toArray(tokenize(text, patterns)))
 
     expect(err).toBeInstanceOf(Error)
   })
@@ -49,7 +49,7 @@ describe('tokenize', () => {
     const patterns = [pattern1, pattern2]
     const text = 'a1'
 
-    const result = toArray(tokenize(patterns, text))
+    const result = toArray(tokenize(text, patterns))
 
     expect(result).toStrictEqual([
       {
