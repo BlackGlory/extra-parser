@@ -27,5 +27,5 @@ export interface INodePattern<
   Token extends IToken<string>
 , Node extends INode<string>
 > {
-  (tokens: Array<Token>): INodePatternMatch<Node> | Falsy
+  (tokens: ReadonlyArray<Token>): INodePatternMatch<Node> | Falsy
 }
