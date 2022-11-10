@@ -1,16 +1,16 @@
 import { tokenize } from '@src/tokenize'
 import { createTokenPatternFromRegExp } from '@src/create-token-pattern-from-regexp'
-import { toArray } from '@blackglory/prelude'
-import { getError } from 'return-style'
+import { toArrayAsync } from '@blackglory/prelude'
+import { getErrorPromise } from 'return-style'
 
 describe('tokenize', () => {
-  test('all known characters', () => {
+  test('all known characters', async () => {
     const pattern1 = createTokenPatternFromRegExp('Alphabet', /[a-bA-B]/)
     const pattern2 = createTokenPatternFromRegExp('Number', /\d/)
     const patterns = [pattern1, pattern2]
     const text = 'a1b2'
 
-    const result = toArray(tokenize(text, patterns))
+    const result = await toArrayAsync(tokenize(text, patterns))
 
     expect(result).toStrictEqual([
       {
@@ -32,24 +32,24 @@ describe('tokenize', () => {
     ])
   })
 
-  test('contains unknown characters', () => {
+  test('contains unknown characters', async () => {
     const pattern1 = createTokenPatternFromRegExp('Alphabet', /\d/)
     const pattern2 = createTokenPatternFromRegExp('Number', /[a-bA-B]/)
     const patterns = [pattern1, pattern2]
     const text = 'a1 b2'
 
-    const err = getError(() => toArray(tokenize(text, patterns)))
+    const err = await getErrorPromise(toArrayAsync(tokenize(text, patterns)))
 
     expect(err).toBeInstanceOf(Error)
   })
 
-  test('match in order', () => {
+  test('match in order', async () => {
     const pattern1 = createTokenPatternFromRegExp('Word', /\w/)
     const pattern2 = createTokenPatternFromRegExp('Number', /\d/)
     const patterns = [pattern1, pattern2]
     const text = 'a1'
 
-    const result = toArray(tokenize(text, patterns))
+    const result = await toArrayAsync(tokenize(text, patterns))
 
     expect(result).toStrictEqual([
       {

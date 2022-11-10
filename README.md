@@ -28,14 +28,14 @@ interface INodePatternMatch<Node extends INode<string>> {
 }
 
 interface ITokenPattern<Token extends IToken<string>> {
-  (text: string): ITokenPatternMatch<Token> | Falsy
+  (text: string): Awaitable<ITokenPatternMatch<Token> | Falsy>
 }
 
 interface INodePattern<
   Token extends IToken<string>
 , Node extends INode<string>
 > {
-  (tokens: ReadonlyArray<Token>): INodePatternMatch<Node> | Falsy
+  (tokens: ReadonlyArray<Token>): Awaitable<INodePatternMatch<Node> | Falsy>
 }
 ```
 
@@ -47,7 +47,7 @@ function tokenize<
 >(
   text: string
 , patterns: Array<TokenPattern>
-): IterableIterator<Token>
+): AsyncIterableIterator<Token>
 ```
 
 ### parse
@@ -55,11 +55,11 @@ function tokenize<
 function parse<
   Token extends IToken<string>
 , Node extends INode<string>
-, NodePattern extends INodePattern<Token, Node> = INodePattern<Token, Node> 
+, NodePattern extends INodePattern<Token, Node> = INodePattern<Token, Node>
 >(
   tokens: Array<Token>
 , patterns: Array<NodePattern>
-): IterableIterator<Node>
+): AsyncIterableIterator<Node>
 ```
 
 ### createTokenPatternFromRegExp
@@ -73,3 +73,14 @@ function createTokenPatternFromRegExp<Token extends IToken<string>>(
 , regExp: RegExp
 ): ITokenPattern<IToken<Token['type']>>
 ```
+
+## FAQ
+### Why are functions asynchronous?
+Some parsers make heavy use of recursion,
+and most JavaScript engines do not support tail-call optimization,
+which leads to the possibility of stack overflow in programs.
+
+Asynchronous functions are an escape route:
+developers can change recursive functions to asynchronous recursive functions
+to get their programs out of stack overflow problems
+without significantly reducing readability.

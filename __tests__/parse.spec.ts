@@ -1,11 +1,11 @@
 import { parse } from '@src/parse'
 import { IToken, INodePattern, INode } from '@src/types'
-import { takeUntil, toArray } from 'iterable-operator'
-import { getError } from 'return-style'
+import { takeUntil, toArray, toArrayAsync } from 'iterable-operator'
+import { getErrorPromise } from 'return-style'
 
 describe('parse', () => {
-  test('all known tokens', () => {
-    const pattern1: INodePattern<IToken<string>, INode<'Identifier'>> = (tokens) => {
+  test('all known tokens', async () => {
+    const pattern1: INodePattern<IToken<string>, INode<'Identifier'>> = tokens => {
       const [firstToken, ...restTokens] = tokens
       if (firstToken.type === 'Alphabet') {
         const usedRestTokens = toArray(takeUntil(restTokens, x => {
@@ -23,7 +23,7 @@ describe('parse', () => {
         }
       }
     }
-    const pattern2: INodePattern<IToken<string>, INode<'Fallback'>> = (tokens) => {
+    const pattern2: INodePattern<IToken<string>, INode<'Fallback'>> = tokens => {
       return {
         consumed: tokens.length
       , node: {
@@ -43,7 +43,7 @@ describe('parse', () => {
     const patterns = [pattern1, pattern2]
     const tokens = [token1, token2]
 
-    const result = toArray(parse(tokens, patterns))
+    const result = await toArrayAsync(parse(tokens, patterns))
 
     expect(result).toStrictEqual([
       {
@@ -53,8 +53,8 @@ describe('parse', () => {
     ])
   })
 
-  test('contains unknown tokens', () => {
-    const pattern1: INodePattern<IToken<string>, INode<'Identifier'>> = (tokens) => {
+  test('contains unknown tokens', async () => {
+    const pattern1: INodePattern<IToken<string>, INode<'Identifier'>> = tokens => {
       const [firstToken, ...restTokens] = tokens
       if (firstToken.type === 'Alphabet') {
         const usedRestTokens = toArray(takeUntil(restTokens, x => {
@@ -88,13 +88,13 @@ describe('parse', () => {
     const patterns = [pattern1]
     const tokens = [token1, token2, token3]
 
-    const err = getError(() => toArray(parse(tokens, patterns)))
+    const err = await getErrorPromise(toArrayAsync(parse(tokens, patterns)))
 
     expect(err).toBeInstanceOf(Error)
   })
 
-  test('parse in order', () => {
-    const pattern1: INodePattern<IToken<string>, INode<'Identifier'>> = (tokens) => {
+  test('parse in order', async () => {
+    const pattern1: INodePattern<IToken<string>, INode<'Identifier'>> = tokens => {
       const [firstToken, ...restTokens] = tokens
       if (firstToken.type === 'Alphabet') {
         const usedRestTokens = toArray(takeUntil(restTokens, x => {
@@ -133,7 +133,7 @@ describe('parse', () => {
     const patterns = [pattern1, pattern2]
     const tokens = [token1, token2]
 
-    const result = toArray(parse(tokens, patterns))
+    const result = await toArrayAsync(parse(tokens, patterns))
 
     expect(result).toStrictEqual([
       {
