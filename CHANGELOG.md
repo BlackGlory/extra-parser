@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/BlackGlory/extra-parser/compare/v0.2.5...v0.3.0) (2022-11-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* Modified signatures of `tokenize`, `parse`, `ITokenPattern`, `INodePattern`
+
+* add support for asynchronous return values ([5931ede](https://github.com/BlackGlory/extra-parser/commit/5931edefbf0b3c2704efed80ac9b6bc18b7b56c4))
+
 ### [0.2.5](https://github.com/BlackGlory/extra-parser/compare/v0.2.4...v0.2.5) (2022-11-10)
 
 ### [0.2.4](https://github.com/BlackGlory/extra-parser/compare/v0.2.3...v0.2.4) (2022-11-09)
