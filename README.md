@@ -27,13 +27,16 @@ interface INodePatternMatch<Node extends INode<string>> {
   node: Node
 }
 
-type TokenPattern<Token extends IToken<string>> =
-  (text: string) => ITokenPatternMatch<Token> | Falsy
+interface ITokenPattern<Token extends IToken<string>> {
+  (text: string): ITokenPatternMatch<Token> | Falsy
+}
 
-type NodePattern<
+interface INodePattern<
   Token extends IToken<string>
 , Node extends INode<string>
-> = (tokens: ReadonlyArray<Token>) => INodePatternMatch<Node> | Falsy
+> {
+  (tokens: ReadonlyArray<Token>): INodePatternMatch<Node> | Falsy
+}
 ```
 
 ### tokenize
