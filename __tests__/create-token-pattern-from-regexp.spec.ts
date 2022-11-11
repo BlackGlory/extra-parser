@@ -12,14 +12,14 @@ describe('createTokenPatternFromRegExp', () => {
     expect(result('a')).toStrictEqual({
       consumed: 1
     , token: {
-        type: tokenType
+        tokenType: tokenType
       , value: 'a'
       }
     })
     expect(result('ab')).toStrictEqual({
       consumed: 1
     , token: {
-        type: tokenType
+        tokenType: tokenType
       , value: 'a'
       }
     })
@@ -38,14 +38,14 @@ describe('createTokenPatternFromRegExp', () => {
     expect(result('a')).toStrictEqual({
       consumed: 1
     , token: {
-        type: tokenType
+        tokenType: tokenType
       , value: 'a'
       }
     })
     expect(result('ab')).toStrictEqual({
       consumed: 2
     , token: {
-        type: tokenType
+        tokenType: tokenType
       , value: 'ab'
       }
     })

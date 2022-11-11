@@ -8,13 +8,13 @@ yarn add extra-parser
 
 ## API
 ```ts
-interface IToken<Type extends string> {
-  type: Type
+interface IToken<TokenType extends string> {
+  tokenType: TokenType
   value: string
 }
 
-interface INode<Type extends string> {
-  type: Type
+interface INode<NodeType extends string> {
+  nodeType: NodeType
 }
 
 interface ITokenPatternMatch<Token extends IToken<string>> {

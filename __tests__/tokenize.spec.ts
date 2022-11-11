@@ -14,19 +14,19 @@ describe('tokenize', () => {
 
     expect(result).toStrictEqual([
       {
-        type: 'Alphabet'
+        tokenType: 'Alphabet'
       , value: 'a'
       }
     , {
-        type: 'Number'
+        tokenType: 'Number'
       , value: '1'
       }
     , {
-        type: 'Alphabet'
+        tokenType: 'Alphabet'
       , value: 'b'
       }
     , {
-        type: 'Number'
+        tokenType: 'Number'
       , value: '2'
       }
     ])
@@ -53,11 +53,11 @@ describe('tokenize', () => {
 
     expect(result).toStrictEqual([
       {
-        type: 'Word'
+        tokenType: 'Word'
       , value: 'a'
       }
     , {
-        type: 'Word'
+        tokenType: 'Word'
       , value: '1'
       }
     ])

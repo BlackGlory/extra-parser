@@ -7,9 +7,9 @@ export function createTokenPatternFromRegExp<TokenType extends string>(
 , regExp: RegExp
 ): ITokenPattern<IToken<TokenType>>
 export function createTokenPatternFromRegExp<Token extends IToken<string>>(
-  tokenType: Token['type']
+  tokenType: Token['tokenType']
 , regExp: RegExp
-): ITokenPattern<IToken<Token['type']>>
+): ITokenPattern<IToken<Token['tokenType']>>
 export function createTokenPatternFromRegExp(
   tokenType: string
 , regExp: RegExp
@@ -23,7 +23,7 @@ export function createTokenPatternFromRegExp(
       return {
         consumed: matchedText.length
       , token: {
-          type: tokenType
+          tokenType: tokenType
         , value: matchedText
         }
       }

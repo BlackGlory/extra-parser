@@ -7,17 +7,17 @@ describe('parse', () => {
   test('all known tokens', async () => {
     const pattern1: INodePattern<IToken<string>, INode<'Identifier'>> = tokens => {
       const [firstToken, ...restTokens] = tokens
-      if (firstToken.type === 'Alphabet') {
+      if (firstToken.tokenType === 'Alphabet') {
         const usedRestTokens = toArray(takeUntil(restTokens, x => {
-          return x.type !== 'Alphabet'
-              && x.type !== 'Number'
+          return x.tokenType !== 'Alphabet'
+              && x.tokenType !== 'Number'
         }))
         const consumed = [firstToken, ...usedRestTokens].length
         const value = [firstToken, ...usedRestTokens].map(x => x.value).join('')
         return {
           consumed
         , node: {
-            type: 'Identifier'
+            nodeType: 'Identifier'
           , value
           }
         }
@@ -27,17 +27,17 @@ describe('parse', () => {
       return {
         consumed: tokens.length
       , node: {
-          type: 'Fallback'
+          nodeType: 'Fallback'
         , value: tokens.map(x => x.value).join('')
         }
       }
     }
     const token1: IToken<'Alphabet'> = {
-      type: 'Alphabet'
+      tokenType: 'Alphabet'
     , value: 'a'
     }
     const token2: IToken<'Number'> = {
-      type: 'Number'
+      tokenType: 'Number'
     , value: '1'
     }
     const patterns = [pattern1, pattern2]
@@ -47,7 +47,7 @@ describe('parse', () => {
 
     expect(result).toStrictEqual([
       {
-        type: 'Identifier'
+        nodeType: 'Identifier'
       , value: 'a1'
       }
     ])
@@ -56,17 +56,17 @@ describe('parse', () => {
   test('contains unknown tokens', async () => {
     const pattern1: INodePattern<IToken<string>, INode<'Identifier'>> = tokens => {
       const [firstToken, ...restTokens] = tokens
-      if (firstToken.type === 'Alphabet') {
+      if (firstToken.tokenType === 'Alphabet') {
         const usedRestTokens = toArray(takeUntil(restTokens, x => {
-          return x.type !== 'Alphabet'
-              && x.type !== 'Number'
+          return x.tokenType !== 'Alphabet'
+              && x.tokenType !== 'Number'
         }))
         const consumed = [firstToken, ...usedRestTokens].length
         const value = [firstToken, ...usedRestTokens].map(x => x.value).join('')
         return {
           consumed
         , node: {
-            type: 'Identifier'
+            nodeType: 'Identifier'
           , value
           }
         }
@@ -74,15 +74,15 @@ describe('parse', () => {
     }
     
     const token1: IToken<'Alphabet'> = {
-      type: 'Alphabet'
+      tokenType: 'Alphabet'
     , value: 'a'
     }
     const token2: IToken<'WhiteSpace'> = {
-      type: 'WhiteSpace'
+      tokenType: 'WhiteSpace'
     , value: ' '
     }
     const token3: IToken<'Number'> = {
-      type: 'Number'
+      tokenType: 'Number'
     , value: '1'
     }
     const patterns = [pattern1]
@@ -96,17 +96,17 @@ describe('parse', () => {
   test('parse in order', async () => {
     const pattern1: INodePattern<IToken<string>, INode<'Identifier'>> = tokens => {
       const [firstToken, ...restTokens] = tokens
-      if (firstToken.type === 'Alphabet') {
+      if (firstToken.tokenType === 'Alphabet') {
         const usedRestTokens = toArray(takeUntil(restTokens, x => {
-          return x.type !== 'Alphabet'
-              && x.type !== 'Number'
+          return x.tokenType !== 'Alphabet'
+              && x.tokenType !== 'Number'
         }))
         const consumed = [firstToken, ...usedRestTokens].length
         const value = [firstToken, ...usedRestTokens].map(x => x.value).join('')
         return {
           consumed
         , node: {
-            type: 'Identifier'
+            nodeType: 'Identifier'
           , value
           }
         }
@@ -117,17 +117,17 @@ describe('parse', () => {
       return {
         consumed: tokens.length
       , node: {
-          type: 'Fallback'
+          nodeType: 'Fallback'
         , value: tokens.map(x => x.value).join('')
         }
       }
     }
     const token1: IToken<'Alphabet'> = {
-      type: 'Alphabet'
+      tokenType: 'Alphabet'
     , value: 'a'
     }
     const token2: IToken<'Number'> = {
-      type: 'Number'
+      tokenType: 'Number'
     , value: '1'
     }
     const patterns = [pattern1, pattern2]
@@ -137,7 +137,7 @@ describe('parse', () => {
 
     expect(result).toStrictEqual([
       {
-        type: 'Identifier'
+        nodeType: 'Identifier'
       , value: 'a1'
       }
     ])

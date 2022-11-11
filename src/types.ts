@@ -1,12 +1,12 @@
 import { Falsy, Awaitable } from '@blackglory/prelude'
 
-export interface IToken<Type extends string> {
-  type: Type
+export interface IToken<TokenType extends string> {
+  tokenType: TokenType
   value: string
 }
 
-export interface INode<Type extends string> {
-  type: Type
+export interface INode<NodeType extends string> {
+  nodeType: NodeType
 }
 
 export interface ITokenPatternMatch<Token extends IToken<string>> {
