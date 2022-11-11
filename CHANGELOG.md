@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/BlackGlory/extra-parser/compare/v0.3.0...v0.4.0) (2022-11-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* Renamed `type` properties
+
+* rename `type` properties ([d2c424d](https://github.com/BlackGlory/extra-parser/commit/d2c424da8d8aed8abedd297a746773427bcba39d))
+
 ## [0.3.0](https://github.com/BlackGlory/extra-parser/compare/v0.2.5...v0.3.0) (2022-11-10)
 
 
