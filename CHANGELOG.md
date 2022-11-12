@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.1](https://github.com/BlackGlory/extra-parser/compare/v0.6.0...v0.6.1) (2022-11-12)
+
+
+### Features
+
+* add `matchRepetitions` ([dc9b412](https://github.com/BlackGlory/extra-parser/commit/dc9b4123b6e303748d4a38f92dcc70fa7dc9f86b))
+
 ## [0.6.0](https://github.com/BlackGlory/extra-parser/compare/v0.5.0...v0.6.0) (2022-11-12)
 
 
