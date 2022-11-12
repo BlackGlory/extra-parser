@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/BlackGlory/extra-parser/compare/v0.5.0...v0.6.0) (2022-11-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* Changed the order of the following function arguments:
+- `tokenize`
+- `parse`
+
+### Features
+
+* add functions ([de3d798](https://github.com/BlackGlory/extra-parser/commit/de3d798d2c0df1be259af26d121018fcdf413097))
+
 ## [0.5.0](https://github.com/BlackGlory/extra-parser/compare/v0.4.0...v0.5.0) (2022-11-12)
 
 
