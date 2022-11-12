@@ -5,7 +5,7 @@ import { getErrorPromise } from 'return-style'
 
 describe('parse', () => {
   test('all known tokens', async () => {
-    const pattern1: INodePattern<IToken<string>, INode<'Identifier'>> = tokens => {
+    const pattern1: INodePattern = tokens => {
       const [firstToken, ...restTokens] = tokens
       if (firstToken.tokenType === 'Alphabet') {
         const usedRestTokens = toArray(takeUntil(restTokens, x => {
@@ -23,7 +23,7 @@ describe('parse', () => {
         }
       }
     }
-    const pattern2: INodePattern<IToken<string>, INode<'Fallback'>> = tokens => {
+    const pattern2: INodePattern = tokens => {
       return {
         consumed: tokens.length
       , node: {
@@ -32,11 +32,11 @@ describe('parse', () => {
         }
       }
     }
-    const token1: IToken<'Alphabet'> = {
+    const token1: IToken = {
       tokenType: 'Alphabet'
     , value: 'a'
     }
-    const token2: IToken<'Number'> = {
+    const token2: IToken = {
       tokenType: 'Number'
     , value: '1'
     }
@@ -54,7 +54,7 @@ describe('parse', () => {
   })
 
   test('contains unknown tokens', async () => {
-    const pattern1: INodePattern<IToken<string>, INode<'Identifier'>> = tokens => {
+    const pattern1: INodePattern = tokens => {
       const [firstToken, ...restTokens] = tokens
       if (firstToken.tokenType === 'Alphabet') {
         const usedRestTokens = toArray(takeUntil(restTokens, x => {
@@ -73,15 +73,15 @@ describe('parse', () => {
       }
     }
     
-    const token1: IToken<'Alphabet'> = {
+    const token1: IToken = {
       tokenType: 'Alphabet'
     , value: 'a'
     }
-    const token2: IToken<'WhiteSpace'> = {
+    const token2: IToken = {
       tokenType: 'WhiteSpace'
     , value: ' '
     }
-    const token3: IToken<'Number'> = {
+    const token3: IToken = {
       tokenType: 'Number'
     , value: '1'
     }
@@ -94,7 +94,7 @@ describe('parse', () => {
   })
 
   test('parse in order', async () => {
-    const pattern1: INodePattern<IToken<string>, INode<'Identifier'>> = tokens => {
+    const pattern1: INodePattern = tokens => {
       const [firstToken, ...restTokens] = tokens
       if (firstToken.tokenType === 'Alphabet') {
         const usedRestTokens = toArray(takeUntil(restTokens, x => {
@@ -113,7 +113,7 @@ describe('parse', () => {
       }
     }
     
-    const pattern2: INodePattern<IToken<string>, INode<'Fallback'>> = (tokens) => {
+    const pattern2: INodePattern = (tokens) => {
       return {
         consumed: tokens.length
       , node: {
@@ -122,11 +122,11 @@ describe('parse', () => {
         }
       }
     }
-    const token1: IToken<'Alphabet'> = {
+    const token1: IToken = {
       tokenType: 'Alphabet'
     , value: 'a'
     }
-    const token2: IToken<'Number'> = {
+    const token2: IToken = {
       tokenType: 'Number'
     , value: '1'
     }

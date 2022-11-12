@@ -2,21 +2,13 @@ import { Falsy } from '@blackglory/prelude'
 import { isntNull } from '@blackglory/types'
 import { IToken, ITokenPattern, ITokenPatternMatch } from './types'
 
-export function createTokenPatternFromRegExp<TokenType extends string>(
-  tokenType: TokenType
-, regExp: RegExp
-): ITokenPattern<IToken<TokenType>>
-export function createTokenPatternFromRegExp<Token extends IToken<string>>(
+export function createTokenPatternFromRegExp<Token extends IToken>(
   tokenType: Token['tokenType']
 , regExp: RegExp
-): ITokenPattern<IToken<Token['tokenType']>>
-export function createTokenPatternFromRegExp(
-  tokenType: string
-, regExp: RegExp
-): ITokenPattern<IToken<string>> {
+): ITokenPattern<IToken> {
   const startsWithRegExp = convertToStartsWithRegExp(regExp)
 
-  return (text: string): ITokenPatternMatch<IToken<string>> | Falsy => {
+  return (text: string): ITokenPatternMatch<IToken> | Falsy => {
     const result = startsWithRegExp.exec(text)
     if (isntNull(result)) {
       const [matchedText] = result

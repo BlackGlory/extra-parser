@@ -1,12 +1,9 @@
 import { isntFalsy } from '@blackglory/prelude'
 import { ITokenPattern, IToken } from './types'
 
-export async function* tokenize<
-  Token extends IToken<string>
-, TokenPattern extends ITokenPattern<Token> = ITokenPattern<Token>
->(
+export async function* tokenize<Token extends IToken = IToken>(
   text: string
-, patterns: Array<TokenPattern>
+, patterns: Array<ITokenPattern<Token>>
 ): AsyncIterableIterator<Token> {
   let i = 0
   loop: while (i < text.length) {

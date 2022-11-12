@@ -8,70 +8,56 @@ yarn add extra-parser
 
 ## API
 ```ts
-interface IToken<TokenType extends string> {
-  tokenType: TokenType
+interface IToken {
+  tokenType: string
   value: string
 }
 
-interface INode<NodeType extends string> {
-  nodeType: NodeType
+interface INode {
+  nodeType: string
 }
 
-interface ITokenPatternMatch<Token extends IToken<string>> {
+interface ITokenPatternMatch<Token extends IToken> {
   consumed: number
   token: Token
 }
 
-interface INodePatternMatch<Node extends INode<string>> {
+interface INodePatternMatch<Node extends INode> {
   consumed: number
   node: Node
 }
 
-interface ITokenPattern<Token extends IToken<string>> {
+interface ITokenPattern<Token extends IToken = IToken> {
   (text: string): Awaitable<ITokenPatternMatch<Token> | Falsy>
 }
 
-interface INodePattern<
-  Token extends IToken<string>
-, Node extends INode<string>
-> {
+interface INodePattern<Token extends IToken = IToken, Node extends INode = INode> {
   (tokens: ReadonlyArray<Token>): Awaitable<INodePatternMatch<Node> | Falsy>
 }
 ```
 
 ### tokenize
 ```ts
-function tokenize<
-  Token extends IToken<string>
-, TokenPattern extends ITokenPattern<Token> = ITokenPattern<Token>
->(
+function tokenize<Token extends IToken = IToken>(
   text: string
-, patterns: Array<TokenPattern>
+, patterns: Array<ITokenPattern<Token>>
 ): AsyncIterableIterator<Token>
 ```
 
 ### parse
 ```ts
-function parse<
-  Token extends IToken<string>
-, Node extends INode<string>
-, NodePattern extends INodePattern<Token, Node> = INodePattern<Token, Node>
->(
-  tokens: Array<Token>
-, patterns: Array<NodePattern>
+function parse<Token extends IToken = IToken, Node extends INode = INode>(
+  tokens: Token[]
+, patterns: Array<INodePattern<Token, Node>>
 ): AsyncIterableIterator<Node>
 ```
 
 ### createTokenPatternFromRegExp
 ```ts
-function createTokenPatternFromRegExp<TokenType extends string>(
-  tokenType: TokenType
+function createTokenPatternFromRegExp<Token extends IToken>(
+  tokenType: Token['tokenType']
 , regExp: RegExp
-): ITokenPattern<IToken<TokenType>>
-function createTokenPatternFromRegExp<Token extends IToken<string>>(
-  tokenType: Token['type']
-, regExp: RegExp
-): ITokenPattern<IToken<Token['type']>>
+): ITokenPattern<IToken>
 ```
 
 ## FAQ

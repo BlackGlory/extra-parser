@@ -1,13 +1,9 @@
 import { isntFalsy } from '@blackglory/prelude'
 import { IToken, INodePattern, INode } from './types'
 
-export async function* parse<
-  Token extends IToken<string>
-, Node extends INode<string>
-, NodePattern extends INodePattern<Token, Node> = INodePattern<Token, Node> 
->(
-  tokens: Array<Token>
-, patterns: Array<NodePattern>
+export async function* parse<Token extends IToken = IToken, Node extends INode = INode>(
+  tokens: Token[]
+, patterns: Array<INodePattern<Token, Node>>
 ): AsyncIterableIterator<Node> {
   let i = 0
   loop: while (i < tokens.length) {
