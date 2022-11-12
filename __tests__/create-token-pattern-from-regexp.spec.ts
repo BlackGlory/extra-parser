@@ -26,6 +26,7 @@ describe('createTokenPatternFromRegExp', () => {
     expect(result('1')).toBeFalsy()
     expect(result('12')).toBeFalsy()
     expect(result(' a')).toBeFalsy()
+    expect(result('')).toBeFalsy()
   })
 
   test('multiple character match', () => {
@@ -52,5 +53,6 @@ describe('createTokenPatternFromRegExp', () => {
     expect(result('1')).toBeFalsy()
     expect(result('12')).toBeFalsy()
     expect(result(' a')).toBeFalsy()
+    expect(result('')).toBeFalsy()
   })
 })

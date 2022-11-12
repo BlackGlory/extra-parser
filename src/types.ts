@@ -23,6 +23,9 @@ export interface ITokenPattern<Token extends IToken = IToken> {
   (text: string): Awaitable<ITokenPatternMatch<Token> | Falsy>
 }
 
-export interface INodePattern<Token extends IToken = IToken, Node extends INode = INode> {
+export interface INodePattern<
+  Token extends IToken = IToken
+, Node extends INode = INode
+> {
   (tokens: ReadonlyArray<Token>): Awaitable<INodePatternMatch<Node> | Falsy>
 }

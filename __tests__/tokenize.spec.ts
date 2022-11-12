@@ -10,7 +10,7 @@ describe('tokenize', () => {
     const patterns = [pattern1, pattern2]
     const text = 'a1b2'
 
-    const result = await toArrayAsync(tokenize(text, patterns))
+    const result = await toArrayAsync(tokenize(patterns, text))
 
     expect(result).toStrictEqual([
       {
@@ -38,7 +38,7 @@ describe('tokenize', () => {
     const patterns = [pattern1, pattern2]
     const text = 'a1 b2'
 
-    const err = await getErrorPromise(toArrayAsync(tokenize(text, patterns)))
+    const err = await getErrorPromise(toArrayAsync(tokenize(patterns, text)))
 
     expect(err).toBeInstanceOf(Error)
   })
@@ -49,7 +49,7 @@ describe('tokenize', () => {
     const patterns = [pattern1, pattern2]
     const text = 'a1'
 
-    const result = await toArrayAsync(tokenize(text, patterns))
+    const result = await toArrayAsync(tokenize(patterns, text))
 
     expect(result).toStrictEqual([
       {

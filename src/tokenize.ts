@@ -2,8 +2,8 @@ import { isntFalsy } from '@blackglory/prelude'
 import { ITokenPattern, IToken } from './types'
 
 export async function* tokenize<Token extends IToken = IToken>(
-  text: string
-, patterns: Array<ITokenPattern<Token>>
+  patterns: Array<ITokenPattern<Token>>
+, text: string
 ): AsyncIterableIterator<Token> {
   let i = 0
   loop: while (i < text.length) {

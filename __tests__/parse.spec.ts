@@ -43,7 +43,7 @@ describe('parse', () => {
     const patterns = [pattern1, pattern2]
     const tokens = [token1, token2]
 
-    const result = await toArrayAsync(parse(tokens, patterns))
+    const result = await toArrayAsync(parse(patterns, tokens))
 
     expect(result).toStrictEqual([
       {
@@ -72,7 +72,6 @@ describe('parse', () => {
         }
       }
     }
-    
     const token1: IToken = {
       tokenType: 'Alphabet'
     , value: 'a'
@@ -88,7 +87,7 @@ describe('parse', () => {
     const patterns = [pattern1]
     const tokens = [token1, token2, token3]
 
-    const err = await getErrorPromise(toArrayAsync(parse(tokens, patterns)))
+    const err = await getErrorPromise(toArrayAsync(parse(patterns, tokens)))
 
     expect(err).toBeInstanceOf(Error)
   })
@@ -112,7 +111,6 @@ describe('parse', () => {
         }
       }
     }
-    
     const pattern2: INodePattern = (tokens) => {
       return {
         consumed: tokens.length
@@ -133,7 +131,7 @@ describe('parse', () => {
     const patterns = [pattern1, pattern2]
     const tokens = [token1, token2]
 
-    const result = await toArrayAsync(parse(tokens, patterns))
+    const result = await toArrayAsync(parse(patterns, tokens))
 
     expect(result).toStrictEqual([
       {

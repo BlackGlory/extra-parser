@@ -1,5 +1,4 @@
-import { Falsy } from '@blackglory/prelude'
-import { isntNull } from '@blackglory/types'
+import { Falsy, isntNull } from '@blackglory/prelude'
 import { IToken, ITokenPattern, ITokenPatternMatch } from './types'
 
 export function createTokenPatternFromRegExp<Token extends IToken>(
