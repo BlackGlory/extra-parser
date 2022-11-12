@@ -4,10 +4,11 @@ import { IToken, INode, MapSequenceToPatterns, MapSequenceToMatches } from './ty
 import { matchSequence } from './match-sequence'
 
 export async function matchRepetitions<
-  Sequence extends ReadonlyArray<IToken | INode>
+  Sequence extends ReadonlyArray<Token | Node>
 , Token extends IToken = IToken
+, Node extends INode = INode
 >(
-  patterns: MapSequenceToPatterns<Sequence>
+  patterns: MapSequenceToPatterns<Sequence, Token, Node>
 , tokens: ReadonlyArray<Token>
 , {
     minimumRepetitions = 1
@@ -16,7 +17,7 @@ export async function matchRepetitions<
     minimumRepetitions?: number
     maximumRepetitions?: number
   } = {}
-): Promise<Flatten<Array<MapSequenceToMatches<Sequence>>> | Falsy> {
+): Promise<Flatten<Array<MapSequenceToMatches<Sequence, Token, Node>>> | Falsy> {
   assert(Number.isInteger(minimumRepetitions), 'The minimum repetiions must be an integer')
   assert(
     minimumRepetitions >= 0
@@ -31,7 +32,7 @@ export async function matchRepetitions<
   , 'The maximum repetitions must be greater than or equal to the minimum repetitions'
   )
 
-  const results: Array<MapSequenceToMatches<Sequence>> = []
+  const results: Array<MapSequenceToMatches<Sequence, Token, Node>> = []
   const mutableTokens = toArray(tokens)
 
   for (let i = 0; i < minimumRepetitions; i++) {
@@ -54,5 +55,5 @@ export async function matchRepetitions<
     }
   }
 
-  return results.flat() as Flatten<Array<MapSequenceToMatches<Sequence>>>
+  return results.flat() as Flatten<Array<MapSequenceToMatches<Sequence, Token, Node>>>
 }

@@ -28,14 +28,15 @@ import { consumeNode } from './consume-node'
  *    在引擎盖下, 它首先匹配TokenType以防止NodePattern在匹配时陷入死循环.
  */
 export async function matchSequence<
-  Sequence extends ReadonlyArray<IToken | INode>
+  Sequence extends ReadonlyArray<Token | Node>
 , Token extends IToken = IToken
+, Node extends INode = INode
 >(
-  patterns: MapSequenceToPatterns<Sequence>
+  patterns: MapSequenceToPatterns<Sequence, Token, Node>
 , tokens: ReadonlyArray<Token>
-): Promise<MapSequenceToMatches<Sequence> | Falsy> {
+): Promise<MapSequenceToMatches<Sequence, Token, Node> | Falsy> {
   if (isTokenTypes(patterns)) {
-    const matches: Array<IToken> = []
+    const matches: Array<Token> = []
 
     const mutableTokens = toArray(tokens)
     for (const pattern of patterns) {
@@ -47,9 +48,9 @@ export async function matchSequence<
       }
     }
 
-    return matches as MapSequenceToMatches<Sequence>
-  } else if (isNodePatterns(patterns)) {
-    const matches: Array<INodePatternMatch<INode>> = []
+    return matches as MapSequenceToMatches<Sequence, Token, Node>
+  } else if (isNodePatterns<Token, Node>(patterns)) {
+    const matches: Array<INodePatternMatch<Node>> = []
 
     const mutableTokens = toArray(tokens)
     for (const pattern of patterns) {
@@ -61,8 +62,8 @@ export async function matchSequence<
       }
     }
 
-    return matches as MapSequenceToMatches<Sequence>
-  } else if (isNodePatternNodeType(patterns)) {
+    return matches as MapSequenceToMatches<Sequence, Token, Node>
+  } else if (isNodePatternNodeType<Token, Node>(patterns)) {
     const [nodePattern, tokenType] = patterns
 
     for (
@@ -74,7 +75,7 @@ export async function matchSequence<
         isntFalsy(leftMatch) &&
         leftMatch.consumed === indexOfToken
       ) {
-        const matches: [INodePatternMatch<INode>, IToken] = [
+        const matches: [INodePatternMatch<Node>, Token] = [
           leftMatch
         , tokens[indexOfToken]
         ]
@@ -82,16 +83,16 @@ export async function matchSequence<
       }
     }
   } else {
-    const matches: Array<INodePatternMatch<INode> | IToken> = []
+    const matches: Array<INodePatternMatch<Node> | Token> = []
     const remainingTokens = toArray(tokens)
     for (const subPatterns of splitPatterns(patterns)) {
-      const subMatches = await matchSequence<Array<IToken | INode>>(
-        subPatterns
+      const subMatches = await matchSequence(
+        subPatterns as MapSequenceToPatterns<Sequence, Token, Node>
       , remainingTokens
       )
       if (isntFalsy(subMatches)) {
         const consumed = subMatches
-          .map(match => {
+          .map((match: Token | INodePatternMatch<Node>) => {
             return 'consumed' in match
                  ? match.consumed
                  : 1
@@ -107,18 +108,22 @@ export async function matchSequence<
   }
 }
 
-type SubPatterns =
-| [INodePattern<IToken, INode>, string]
+type SubPatterns<Token extends IToken = IToken, Node extends INode = INode> =
+| [INodePattern<Token, Node>, string]
 | NonEmptyArray<string>
-| NonEmptyArray<INodePattern<IToken, INode>>
+| NonEmptyArray<INodePattern<Token, Node>>
 
 /**
  * 该函数会匹配尽可能长的subPatterns.
  */
-export function* splitPatterns<Sequence extends ReadonlyArray<IToken | INode>>(
-  patterns: MapSequenceToPatterns<Sequence>
-): IterableIterator<SubPatterns> {
-  const mutablePatterns = toArray(patterns)
+export function* splitPatterns<
+  Sequence extends ReadonlyArray<Token | Node>
+, Token extends IToken = IToken
+, Node extends INode = INode
+>(
+  patterns: MapSequenceToPatterns<Sequence, Token, Node>
+): IterableIterator<SubPatterns<Token, Node>> {
+  const mutablePatterns: Array<INodePattern<Token, Node> | string> = toArray(patterns)
 
   while (mutablePatterns.length > 0) {
     if (isTokenType(mutablePatterns[0])) {
@@ -132,11 +137,11 @@ export function* splitPatterns<Sequence extends ReadonlyArray<IToken | INode>>(
       const indexOfToken = mutablePatterns.findIndex(x => isTokenType(x))
       if (indexOfToken === -1) {
         yield mutablePatterns.splice(0) as NonEmptyArray<
-          INodePattern<IToken, INode>
+          INodePattern<Token, Node>
         >
       } else {
         yield mutablePatterns.splice(0, indexOfToken + 1) as [
-          INodePattern<IToken, INode>
+          INodePattern<Token, Node>
         , string
         ]
       }
@@ -154,21 +159,21 @@ function isTokenType(val: unknown): val is string {
   return isString(val)
 }
 
-function isNodePatterns(
+function isNodePatterns<Token extends IToken = IToken, Node extends INode = INode>(
   arr: ReadonlyArray<unknown>
-): arr is ReadonlyArray<INodePattern<IToken, INode>> {
+): arr is ReadonlyArray<INodePattern<Token, Node>> {
   return arr.every(isNodePattern)
 }
 
-function isNodePattern(
+function isNodePattern<Token extends IToken = IToken, Node extends INode = INode>(
   val: unknown
-): val is INodePattern<IToken, INode> {
+): val is INodePattern<Token, Node> {
   return isFunction(val)
 }
 
-function isNodePatternNodeType(
+function isNodePatternNodeType<Token extends IToken = IToken, Node extends INode = INode>(
   arr: ReadonlyArray<unknown>
-): arr is readonly [INodePattern<IToken, INode>, string] {
+): arr is readonly [INodePattern<Token, Node>, string] {
   return arr.length === 2
       && isNodePattern(arr[0])
       && isTokenType(arr[1])

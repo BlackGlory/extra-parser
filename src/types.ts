@@ -30,25 +30,33 @@ export interface INodePattern<
   (tokens: ReadonlyArray<Token>): Awaitable<INodePatternMatch<Node> | Falsy>
 }
 
-export type MapSequenceToPatterns<Sequence extends ReadonlyArray<IToken | INode>> = {
+export type MapSequenceToPatterns<
+  Sequence extends ReadonlyArray<Token | Node>
+, Token extends IToken = IToken
+, Node extends INode = INode
+> = {
   [Index in keyof Sequence]:
     [Sequence[Index]] extends [infer Element]
   ? (
-      Element extends IToken
+      Element extends Token
       ? string
-    : Element extends INode
-      ? INodePattern<IToken, Element>
+    : Element extends Node
+      ? INodePattern<Token, Element>
     : never
     )
   : never
 }
 
-export type MapSequenceToMatches<Sequence extends ReadonlyArray<IToken | INode>> = {
+export type MapSequenceToMatches<
+  Sequence extends ReadonlyArray<Token | Node>
+, Token extends IToken = IToken
+, Node extends INode = INode
+> = {
   [Index in keyof Sequence]:
     [Sequence[Index]] extends [infer Element]
   ? (
       Element extends IToken
-      ? IToken
+      ? Token
     : Element extends INode
       ? INodePatternMatch<Element>
     : never
