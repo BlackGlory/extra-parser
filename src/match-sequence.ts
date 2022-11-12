@@ -7,35 +7,16 @@ import {
 , toArray
 } from '@blackglory/prelude'
 import { findAllIndexes } from 'iterable-operator'
-import { IToken, INode, INodePattern, INodePatternMatch } from './types'
+import {
+  IToken
+, INode
+, INodePattern
+, INodePatternMatch
+, MapSequenceToPatterns
+, MapSequenceToMatches
+} from './types'
 import { consumeToken } from './consume-token'
 import { consumeNode } from './consume-node'
-
-type MapSequenceToPatterns<Sequence extends ReadonlyArray<IToken | INode>> = {
-  [Index in keyof Sequence]:
-    [Sequence[Index]] extends [infer Element]
-  ? (
-      Element extends IToken
-      ? string
-    : Element extends INode
-      ? INodePattern<IToken, Element>
-    : never
-    )
-  : never
-}
-
-type MapSequenceToMatches<Sequence extends ReadonlyArray<IToken | INode>> = {
-  [Index in keyof Sequence]:
-    [Sequence[Index]] extends [infer Element]
-  ? (
-      Element extends IToken
-      ? IToken
-    : Element extends INode
-      ? INodePatternMatch<Element>
-    : never
-    )
-  : never
-}
 
 /**
  * 模式将被拆分为以下子模式来处理:

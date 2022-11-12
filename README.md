@@ -47,6 +47,32 @@ interface ITokenPattern<Token extends IToken = IToken> {
 interface INodePattern<Token extends IToken = IToken, Node extends INode = INode> {
   (tokens: ReadonlyArray<Token>): Awaitable<INodePatternMatch<Node> | Falsy>
 }
+
+type MapSequenceToPatterns<Sequence extends ReadonlyArray<IToken | INode>> = {
+  [Index in keyof Sequence]:
+    [Sequence[Index]] extends [infer Element]
+  ? (
+      Element extends IToken
+      ? string
+    : Element extends INode
+      ? INodePattern<IToken, Element>
+    : never
+    )
+  : never
+}
+
+type MapSequenceToMatches<Sequence extends ReadonlyArray<IToken | INode>> = {
+  [Index in keyof Sequence]:
+    [Sequence[Index]] extends [infer Element]
+  ? (
+      Element extends IToken
+      ? IToken
+    : Element extends INode
+      ? INodePatternMatch<Element>
+    : never
+    )
+  : never
+}
 ```
 
 ### tokenize
@@ -97,36 +123,22 @@ function matchAnyOf<
 
 #### matchSequence
 ```ts
-type MapSequenceToPatterns<Sequence extends ReadonlyArray<IToken | INode>> = {
-  [Index in keyof Sequence]:
-    [Sequence[Index]] extends [infer Element]
-  ? (
-      Element extends IToken
-      ? string
-    : Element extends INode
-      ? INodePattern<IToken, Element>
-    : never
-    )
-  : never
-}
-
-type MapSequenceToMatches<Sequence extends ReadonlyArray<IToken | INode>> = {
-  [Index in keyof Sequence]:
-    [Sequence[Index]] extends [infer Element]
-  ? (
-      Element extends IToken
-      ? IToken
-    : Element extends INode
-      ? INodePatternMatch<Element>
-    : never
-    )
-  : never
-}
-
 function matchSequence<Sequence extends ReadonlyArray<IToken | INode>>(
   patterns: MapSequenceToPatterns<Sequence>
 , tokens: ReadonlyArray<IToken>
 ): Promise<MapSequenceToMatches<Sequence> | Falsy>
+```
+
+#### matchRepetitions
+```ts
+function matchRepetitions<Sequence extends ReadonlyArray<IToken | INode>>(
+  patterns: MapSequenceToPatterns<Sequence>
+, tokens: ReadonlyArray<IToken>
+, options?: {
+    minimumRepetitions?: number = 1
+    maximumRepetitions?: number = Infinity
+  }
+): Promise<Flatten<Array<MapSequenceToMatches<Sequence>>> | Falsy>
 ```
 
 ### createTokenPatternFromRegExp

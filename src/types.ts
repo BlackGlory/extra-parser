@@ -29,3 +29,29 @@ export interface INodePattern<
 > {
   (tokens: ReadonlyArray<Token>): Awaitable<INodePatternMatch<Node> | Falsy>
 }
+
+export type MapSequenceToPatterns<Sequence extends ReadonlyArray<IToken | INode>> = {
+  [Index in keyof Sequence]:
+    [Sequence[Index]] extends [infer Element]
+  ? (
+      Element extends IToken
+      ? string
+    : Element extends INode
+      ? INodePattern<IToken, Element>
+    : never
+    )
+  : never
+}
+
+export type MapSequenceToMatches<Sequence extends ReadonlyArray<IToken | INode>> = {
+  [Index in keyof Sequence]:
+    [Sequence[Index]] extends [infer Element]
+  ? (
+      Element extends IToken
+      ? IToken
+    : Element extends INode
+      ? INodePatternMatch<Element>
+    : never
+    )
+  : never
+}
