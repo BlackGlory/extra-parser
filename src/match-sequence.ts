@@ -27,9 +27,12 @@ import { consumeNode } from './consume-node'
  *    这种子模式适用于二元或三元运算符这样的规则.
  *    在引擎盖下, 它首先匹配TokenType以防止NodePattern在匹配时陷入死循环.
  */
-export async function matchSequence<Sequence extends ReadonlyArray<IToken | INode>>(
+export async function matchSequence<
+  Sequence extends ReadonlyArray<IToken | INode>
+, Token extends IToken = IToken
+>(
   patterns: MapSequenceToPatterns<Sequence>
-, tokens: ReadonlyArray<IToken>
+, tokens: ReadonlyArray<Token>
 ): Promise<MapSequenceToMatches<Sequence> | Falsy> {
   if (isTokenTypes(patterns)) {
     const matches: Array<IToken> = []

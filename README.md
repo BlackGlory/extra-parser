@@ -123,17 +123,23 @@ function matchAnyOf<
 
 #### matchSequence
 ```ts
-function matchSequence<Sequence extends ReadonlyArray<IToken | INode>>(
+function matchSequence<
+  Sequence extends ReadonlyArray<IToken | INode>
+, Token extends IToken = IToken
+>(
   patterns: MapSequenceToPatterns<Sequence>
-, tokens: ReadonlyArray<IToken>
+, tokens: ReadonlyArray<Token>
 ): Promise<MapSequenceToMatches<Sequence> | Falsy>
 ```
 
 #### matchRepetitions
 ```ts
-function matchRepetitions<Sequence extends ReadonlyArray<IToken | INode>>(
+function matchRepetitions<
+  Sequence extends ReadonlyArray<IToken | INode>
+, Token extends IToken = IToken
+>(
   patterns: MapSequenceToPatterns<Sequence>
-, tokens: ReadonlyArray<IToken>
+, tokens: ReadonlyArray<Token>
 , options?: {
     minimumRepetitions?: number = 1
     maximumRepetitions?: number = Infinity

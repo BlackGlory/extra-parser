@@ -3,9 +3,12 @@ import { Flatten } from 'hotypes'
 import { IToken, INode, MapSequenceToPatterns, MapSequenceToMatches } from './types'
 import { matchSequence } from './match-sequence'
 
-export async function matchRepetitions<Sequence extends ReadonlyArray<IToken | INode>>(
+export async function matchRepetitions<
+  Sequence extends ReadonlyArray<IToken | INode>
+, Token extends IToken = IToken
+>(
   patterns: MapSequenceToPatterns<Sequence>
-, tokens: ReadonlyArray<IToken>
+, tokens: ReadonlyArray<Token>
 , {
     minimumRepetitions = 1
   , maximumRepetitions = Infinity
