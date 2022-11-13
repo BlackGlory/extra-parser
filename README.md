@@ -118,7 +118,7 @@ function consumeToken<Token extends IToken = IToken>(
 ): Token | Falsy
 ```
 
-#### matchAnyOf
+### matchAnyOf
 ```ts
 function matchAnyOf<
   Token extends IToken = IToken
@@ -129,7 +129,7 @@ function matchAnyOf<
 ): Promise<INodePatternMatch<Node> | Falsy>
 ```
 
-#### matchSequence
+### matchSequence
 ```ts
 function matchSequence<
   Sequence extends ReadonlyArray<Token | Node>
@@ -141,7 +141,7 @@ function matchSequence<
 ): Promise<MapSequenceToMatches<Sequence, Token, Node> | Falsy>
 ```
 
-#### matchRepetitions
+### matchRepetitions
 ```ts
 function matchRepetitions<
   Sequence extends ReadonlyArray<Token | Node>
