@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.3](https://github.com/BlackGlory/extra-parser/compare/v0.6.2...v0.6.3) (2022-11-13)
+
+
+### Bug Fixes
+
+* dependencies ([4bb8232](https://github.com/BlackGlory/extra-parser/commit/4bb8232e96b684062c5f7725704e6838519805d2))
+
 ### [0.6.2](https://github.com/BlackGlory/extra-parser/compare/v0.6.1...v0.6.2) (2022-11-12)
 
 ### [0.6.1](https://github.com/BlackGlory/extra-parser/compare/v0.6.0...v0.6.1) (2022-11-12)
