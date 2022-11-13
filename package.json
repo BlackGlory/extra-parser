@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "@blackglory/prelude": "^0.1.8",
+    "hotypes": "^0.5.1",
     "iterable-operator": "^2.3.0"
   }
 }
