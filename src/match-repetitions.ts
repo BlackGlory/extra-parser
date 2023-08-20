@@ -1,6 +1,5 @@
 import { assert, Falsy, isntFalsy, toArray } from '@blackglory/prelude'
-import { Flatten } from 'hotypes'
-import { IToken, INode, MapSequenceToPatterns, MapSequenceToMatches } from './types'
+import { IToken, INode, MapSequenceToPatterns, MapSequenceToMatches, INodePatternMatch } from './types'
 import { matchSequence } from './match-sequence'
 
 export async function matchRepetitions<
@@ -17,7 +16,7 @@ export async function matchRepetitions<
     minimumRepetitions?: number
     maximumRepetitions?: number
   } = {}
-): Promise<Flatten<Array<MapSequenceToMatches<Sequence, Token, Node>>> | Falsy> {
+): Promise<Array<Token | INodePatternMatch<Node>> | Falsy> {
   assert(Number.isInteger(minimumRepetitions), 'The minimum repetiions must be an integer')
   assert(
     minimumRepetitions >= 0
@@ -55,5 +54,5 @@ export async function matchRepetitions<
     }
   }
 
-  return results.flat() as Flatten<Array<MapSequenceToMatches<Sequence, Token, Node>>>
+  return results.flat() as Array<Token | INodePatternMatch<Node>>
 }

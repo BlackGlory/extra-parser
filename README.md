@@ -154,7 +154,7 @@ function matchRepetitions<
     minimumRepetitions?: number = 1
     maximumRepetitions?: number = Infinity
   }
-): Promise<Flatten<Array<MapSequenceToMatches<Sequence, Token, Node>>> | Falsy>
+): Promise<Array<Token | INodePatternMatch<Node>> | Falsy>
 ```
 
 ### createTokenPatternFromRegExp
