@@ -54,12 +54,12 @@ type MapSequenceToPatterns<
 , Node extends INode = INode
 > = {
   [Index in keyof Sequence]:
-    [Sequence[Index]] extends [infer Element]
+    [Sequence[Index]] extends [infer TokenOrNode]
   ? (
-      Element extends Token
+      TokenOrNode extends Token
       ? string
-    : Element extends Node
-      ? INodePattern<Token, Element>
+    : TokenOrNode extends Node
+      ? INodePattern<Token, TokenOrNode>
     : never
     )
   : never
@@ -71,12 +71,12 @@ type MapSequenceToMatches<
 , Node extends INode = INode
 > = {
   [Index in keyof Sequence]:
-    [Sequence[Index]] extends [infer Element]
+    [Sequence[Index]] extends [infer TokenOrNode]
   ? (
-      Element extends IToken
+      TokenOrNode extends IToken
       ? Token
-    : Element extends INode
-      ? INodePatternMatch<Element>
+    : TokenOrNode extends INode
+      ? INodePatternMatch<TokenOrNode>
     : never
     )
   : never
