@@ -1,7 +1,72 @@
 import { matchRepetitions } from '@src/match-repetitions'
-import { IToken } from '@src/types'
+import { INodePattern, IToken } from '@src/types'
 
 describe('matchRepetitions', () => {
+  test('tokens as patterns', async () => {
+    const patterns = ['Token']
+    const tokens: IToken[] = [
+      {
+        tokenType: 'Token'
+      , value: 'value'
+      }
+    ]
+
+    const result = await matchRepetitions(patterns, tokens)
+
+    expect(result).toStrictEqual([
+      {
+        tokenType: 'Token'
+      , value: 'value'
+      }
+    ])
+  })
+
+  test('node patterns', async () => {
+    const patterns: INodePattern[] = [
+      tokens => {
+        if (
+          tokens.length >= 2 &&
+          tokens[0].tokenType === 'Token' &&
+          tokens[1].tokenType === 'Token'
+        ) {
+          return {
+            node: {
+              nodeType: 'TwoToken'
+            , values: [tokens[0].value, tokens[1].value]
+            }
+          , consumed: 2
+          }
+        }
+      }
+    ]
+    const tokens: IToken[] = [
+      {
+        tokenType: 'Token'
+      , value: '1'
+      }
+    , {
+        tokenType: 'Token'
+      , value: '2'
+      }
+    , {
+        tokenType: 'Token'
+      , value: '3'
+      }
+    ]
+
+    const result = await matchRepetitions(patterns, tokens)
+
+    expect(result).toStrictEqual([
+      {
+        consumed: 2
+      , node: {
+          nodeType: 'TwoToken'
+        , values: ['1', '2']
+        }
+      }
+    ])
+  })
+
   describe('minimumRepetitions', () => {
     test('matches are greater than or equal to minimum repetitions', async () => {
       const patterns = ['Token']

@@ -31,14 +31,13 @@ export async function matchRepetitions<
   , 'The maximum repetitions must be greater than or equal to the minimum repetitions'
   )
 
-  const results: Array<MapSequenceToMatches<Sequence, Token, Node>> = []
+  const results: Array<Token | INodePatternMatch<Node>> = []
   const mutableTokens = toArray(tokens)
 
   for (let i = 0; i < minimumRepetitions; i++) {
     const matches = await matchSequence(patterns, mutableTokens)
     if (isntFalsy(matches)) {
-      results.push(matches)
-      mutableTokens.splice(0, matches.length)
+      handleMatches(matches)
     } else {
       return
     }
@@ -47,12 +46,27 @@ export async function matchRepetitions<
   for (let i = minimumRepetitions; i < maximumRepetitions; i++) {
     const matches = await matchSequence(patterns, mutableTokens)
     if (isntFalsy(matches)) {
-      results.push(matches)
-      mutableTokens.splice(0, matches.length)
+      handleMatches(matches)
     } else {
       break
     }
   }
 
-  return results.flat() as Array<Token | INodePatternMatch<Node>>
+  return results
+
+  function handleMatches(
+    matches: MapSequenceToMatches<Sequence, Token, Node>
+  ): void {
+    results.push(...matches)
+    mutableTokens.splice(
+      0
+    , getConsumed(matches as Array<Token | INodePatternMatch<Node>>)
+    )
+  }
+}
+
+function getConsumed(matches: Array<IToken | INodePatternMatch<INode>>): number {
+  return matches
+    .map(match => 'consumed' in match ? match.consumed : 1)
+    .reduce((acc, cur) => acc + cur)
 }
