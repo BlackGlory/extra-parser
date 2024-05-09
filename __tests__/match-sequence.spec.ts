@@ -4,7 +4,7 @@ import { IToken, INodePattern } from '@src/types'
 
 describe('matchSequence', () => {
   describe('[TokenType]', () => {
-    test('matched', async () => {
+    test('matched', () => {
       const patterns = ['Token']
       const tokens: IToken[] = [
         {
@@ -13,7 +13,7 @@ describe('matchSequence', () => {
         }
       ]
 
-      const result = await matchSequence(patterns, tokens)
+      const result = matchSequence(patterns, tokens)
 
       expect(result).toStrictEqual([
         {
@@ -24,17 +24,17 @@ describe('matchSequence', () => {
     })
 
     describe('not matched', () => {
-      test('tokens are less than needed', async () => {
+      test('tokens are less than needed', () => {
         const patterns = ['Token']
         const tokens: IToken[] = []
 
-        const result = await matchSequence(patterns, tokens)
+        const result = matchSequence(patterns, tokens)
 
         expect(tokens).toStrictEqual([])
         expect(result).toBe(undefined)
       })
 
-      test('token is not matched', async () => {
+      test('token is not matched', () => {
         const patterns = ['Token']
         const tokens: IToken[] = [
           {
@@ -43,7 +43,7 @@ describe('matchSequence', () => {
           }
         ]
 
-        const result = await matchSequence(patterns, tokens)
+        const result = matchSequence(patterns, tokens)
 
         expect(result).toBe(undefined)
       })
@@ -51,7 +51,7 @@ describe('matchSequence', () => {
   })
 
   describe('[NodePattern]', () => {
-    test('matched', async () => {
+    test('matched', () => {
       const patterns = [
         (tokens: ReadonlyArray<IToken>) => ({
           consumed: 1
@@ -68,7 +68,7 @@ describe('matchSequence', () => {
         }
       ]
 
-      const result = await matchSequence(patterns, tokens)
+      const result = matchSequence(patterns, tokens)
 
       expect(result).toStrictEqual([
         {
@@ -82,19 +82,19 @@ describe('matchSequence', () => {
     })
 
     describe('not matched', () => {
-      test('tokens are less than needed', async () => {
+      test('tokens are less than needed', () => {
         const patterns = [
           (tokens: ReadonlyArray<IToken>) => false as const
         ]
         const tokens: IToken[] = []
 
-        const result = await matchSequence(patterns, tokens)
+        const result = matchSequence(patterns, tokens)
 
         expect(tokens).toStrictEqual([])
         expect(result).toBe(undefined)
       })
 
-      test('node is not matched', async () => {
+      test('node is not matched', () => {
         const patterns = [
           (tokens: ReadonlyArray<IToken>) => false as const
         ]
@@ -105,7 +105,7 @@ describe('matchSequence', () => {
           }
         ]
 
-        const result = await matchSequence(patterns, tokens)
+        const result = matchSequence(patterns, tokens)
 
         expect(result).toBe(undefined)
       })
@@ -113,7 +113,7 @@ describe('matchSequence', () => {
   })
 
   describe('[TokenType, NodePattern, TokenType]', () => {
-    test('matched', async () => {
+    test('matched', () => {
       const patterns = [
         'Left'
       , (tokens: ReadonlyArray<IToken>) => {
@@ -144,7 +144,7 @@ describe('matchSequence', () => {
         }
       ]
 
-      const result = await matchSequence(patterns, tokens)
+      const result = matchSequence(patterns, tokens)
 
       expect(result).toStrictEqual([
         {
@@ -166,7 +166,7 @@ describe('matchSequence', () => {
     })
 
     describe('not matched', () => {
-      test('tokens are less than needed', async () => {
+      test('tokens are less than needed', () => {
         const patterns = [
           'Left'
         , (tokens: ReadonlyArray<IToken>) => {
@@ -184,12 +184,12 @@ describe('matchSequence', () => {
         ]
         const tokens: IToken[] = []
 
-        const result = await matchSequence(patterns, tokens)
+        const result = matchSequence(patterns, tokens)
 
         expect(result).toBe(undefined)
       })
 
-      test('first token is not matched', async () => {
+      test('first token is not matched', () => {
         const patterns = [
           'Left'
         , (tokens: ReadonlyArray<IToken>) => {
@@ -220,12 +220,12 @@ describe('matchSequence', () => {
           }
         ]
 
-        const result = await matchSequence(patterns, tokens)
+        const result = matchSequence(patterns, tokens)
 
         expect(result).toBe(undefined)
       })
 
-      test('node is not matched', async () => {
+      test('node is not matched', () => {
         const patterns = [
           'Left'
         , (tokens: ReadonlyArray<IToken>) => {
@@ -256,12 +256,12 @@ describe('matchSequence', () => {
           }
         ]
 
-        const result = await matchSequence(patterns, tokens)
+        const result = matchSequence(patterns, tokens)
 
         expect(result).toBe(undefined)
       })
 
-      test('last token is not matched', async () => {
+      test('last token is not matched', () => {
         const patterns = [
           'Left'
         , (tokens: ReadonlyArray<IToken>) => {
@@ -292,7 +292,7 @@ describe('matchSequence', () => {
           }
         ]
 
-        const result = await matchSequence(patterns, tokens)
+        const result = matchSequence(patterns, tokens)
 
         expect(result).toBe(undefined)
       })
@@ -300,7 +300,7 @@ describe('matchSequence', () => {
   })
 
   describe('[NodePattern, TokenType, NodePattern]', () => {
-    test('matched', async () => {
+    test('matched', () => {
       const patterns = [
         (tokens: ReadonlyArray<IToken>) => {
           if (tokens[0].tokenType === 'Left') {
@@ -341,7 +341,7 @@ describe('matchSequence', () => {
         }
       ]
 
-      const result = await matchSequence(patterns, tokens)
+      const result = matchSequence(patterns, tokens)
 
       expect(result).toStrictEqual([
         {
@@ -366,7 +366,7 @@ describe('matchSequence', () => {
     })
 
     describe('not matched', () => {
-      test('first node is not matched', async () => {
+      test('first node is not matched', () => {
         const patterns = [
           (tokens: ReadonlyArray<IToken>) => {
             if (tokens[0].tokenType === 'Left') {
@@ -407,12 +407,12 @@ describe('matchSequence', () => {
           }
         ]
 
-        const result = await matchSequence(patterns, tokens)
+        const result = matchSequence(patterns, tokens)
 
         expect(result).toBe(undefined)
       })
 
-      test('token is not matched', async () => {
+      test('token is not matched', () => {
         const patterns = [
           (tokens: ReadonlyArray<IToken>) => {
             if (tokens[0].tokenType === 'Left') {
@@ -453,12 +453,12 @@ describe('matchSequence', () => {
           }
         ]
 
-        const result = await matchSequence(patterns, tokens)
+        const result = matchSequence(patterns, tokens)
 
         expect(result).toBe(undefined)
       })
 
-      test('last node is not matched', async () => {
+      test('last node is not matched', () => {
         const patterns = [
           (tokens: ReadonlyArray<IToken>) => {
             if (tokens[0].tokenType === 'Left') {
@@ -499,7 +499,7 @@ describe('matchSequence', () => {
           }
         ]
 
-        const result = await matchSequence(patterns, tokens)
+        const result = matchSequence(patterns, tokens)
 
         expect(result).toBe(undefined)
       })

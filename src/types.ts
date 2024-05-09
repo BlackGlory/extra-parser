@@ -1,4 +1,4 @@
-import { Falsy, Awaitable } from '@blackglory/prelude'
+import { Falsy } from '@blackglory/prelude'
 
 export interface IToken {
   tokenType: string
@@ -20,14 +20,14 @@ export interface INodePatternMatch<Node extends INode> {
 }
 
 export interface ITokenPattern<Token extends IToken = IToken> {
-  (text: string): Awaitable<ITokenPatternMatch<Token> | Falsy>
+  (text: string): ITokenPatternMatch<Token> | Falsy
 }
 
 export interface INodePattern<
   Token extends IToken = IToken
 , Node extends INode = INode
 > {
-  (tokens: ReadonlyArray<Token>): Awaitable<INodePatternMatch<Node> | Falsy>
+  (tokens: ReadonlyArray<Token>): INodePatternMatch<Node> | Falsy
 }
 
 export type MapSequenceToPatterns<

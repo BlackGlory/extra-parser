@@ -1,10 +1,10 @@
 import { parse } from '@src/parse'
-import { IToken, INodePattern, INode } from '@src/types'
-import { takeUntil, toArray, toArrayAsync } from 'iterable-operator'
-import { getErrorPromise } from 'return-style'
+import { IToken, INodePattern } from '@src/types'
+import { takeUntil, toArray } from 'iterable-operator'
+import { getError } from 'return-style'
 
 describe('parse', () => {
-  test('all known tokens', async () => {
+  test('all known tokens', () => {
     const pattern1: INodePattern = tokens => {
       const [firstToken, ...restTokens] = tokens
       if (firstToken.tokenType === 'Alphabet') {
@@ -43,7 +43,7 @@ describe('parse', () => {
     const patterns = [pattern1, pattern2]
     const tokens = [token1, token2]
 
-    const result = await toArrayAsync(parse(patterns, tokens))
+    const result = toArray(parse(patterns, tokens))
 
     expect(result).toStrictEqual([
       {
@@ -53,7 +53,7 @@ describe('parse', () => {
     ])
   })
 
-  test('contains unknown tokens', async () => {
+  test('contains unknown tokens', () => {
     const pattern1: INodePattern = tokens => {
       const [firstToken, ...restTokens] = tokens
       if (firstToken.tokenType === 'Alphabet') {
@@ -87,12 +87,12 @@ describe('parse', () => {
     const patterns = [pattern1]
     const tokens = [token1, token2, token3]
 
-    const err = await getErrorPromise(toArrayAsync(parse(patterns, tokens)))
+    const err = getError(() => toArray(parse(patterns, tokens)))
 
     expect(err).toBeInstanceOf(Error)
   })
 
-  test('parse in order', async () => {
+  test('parse in order', () => {
     const pattern1: INodePattern = tokens => {
       const [firstToken, ...restTokens] = tokens
       if (firstToken.tokenType === 'Alphabet') {
@@ -131,7 +131,7 @@ describe('parse', () => {
     const patterns = [pattern1, pattern2]
     const tokens = [token1, token2]
 
-    const result = await toArrayAsync(parse(patterns, tokens))
+    const result = toArray(parse(patterns, tokens))
 
     expect(result).toStrictEqual([
       {

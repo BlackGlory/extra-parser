@@ -2,7 +2,7 @@ import { createGroupedExpressionNodePattern } from '@src/create-grouped-expressi
 import { IToken, INodePattern } from '@src/types'
 
 describe('createGroupedExpressionNodePattern', () => {
-  test('matched', async () => {
+  test('matched', () => {
     const leftTokenType = 'LeftParenthesis'
     const rightTokenType = 'RightParenthesis'
     const centerNodePattern: INodePattern = tokens => {
@@ -36,7 +36,7 @@ describe('createGroupedExpressionNodePattern', () => {
       }
     ]
 
-    const result = await pattern(tokens)
+    const result = pattern(tokens)
 
     expect(result).toStrictEqual({
       consumed: 3
@@ -48,7 +48,7 @@ describe('createGroupedExpressionNodePattern', () => {
   })
 
   describe('not matched', () => {
-    test('tokens are less than needed', async () => {
+    test('tokens are less than needed', () => {
       const leftTokenType = 'LeftParenthesis'
       const rightTokenType = 'RightParenthesis'
       const centerNodePattern: INodePattern = tokens => {
@@ -69,12 +69,12 @@ describe('createGroupedExpressionNodePattern', () => {
       , rightTokenType
       })
 
-      const result = await pattern(tokens)
+      const result = pattern(tokens)
 
       expect(result).toBe(undefined)
     })
 
-    test('left token is not matched', async () => {
+    test('left token is not matched', () => {
       const leftTokenType = 'LeftParenthesis'
       const rightTokenType = 'RightParenthesis'
       const centerNodePattern: INodePattern = tokens => {
@@ -108,12 +108,12 @@ describe('createGroupedExpressionNodePattern', () => {
       , rightTokenType
       })
 
-      const result = await pattern(tokens)
+      const result = pattern(tokens)
 
       expect(result).toBe(undefined)
     })
 
-    test('center node is not matched', async () => {
+    test('center node is not matched', () => {
       const leftTokenType = 'LeftParenthesis'
       const rightTokenType = 'RightParenthesis'
       const centerNodePattern: INodePattern = tokens => {
@@ -147,12 +147,12 @@ describe('createGroupedExpressionNodePattern', () => {
       , rightTokenType
       })
 
-      const result = await pattern(tokens)
+      const result = pattern(tokens)
 
       expect(result).toBe(undefined)
     })
 
-    test('right token is not matched', async () => {
+    test('right token is not matched', () => {
       const leftTokenType = 'LeftParenthesis'
       const rightTokenType = 'RightParenthesis'
       const centerNodePattern: INodePattern = tokens => {
@@ -186,7 +186,7 @@ describe('createGroupedExpressionNodePattern', () => {
       , rightTokenType
       })
 
-      const result = await pattern(tokens)
+      const result = pattern(tokens)
 
       expect(result).toBe(undefined)
     })

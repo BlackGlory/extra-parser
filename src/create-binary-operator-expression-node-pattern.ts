@@ -26,8 +26,8 @@ export function createBinaryOperatorExpressionNodePattern<
   Token
 , IBinaryOperatorExpressionNode<Node['nodeType'], Node['left'], Node['right']>
 > {
-  return async tokens => {
-    const matches = await matchSequence<[INode, IToken, INode]>(
+  return tokens => {
+    const matches = matchSequence<[INode, IToken, INode]>(
       [
         leftNodePattern as INodePattern<IToken, LeftNode>
       , centerTokenType

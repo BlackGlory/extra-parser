@@ -27,14 +27,14 @@ import { consumeNode } from './consume-node'
  *    这种子模式适用于二元或三元运算符这样的规则.
  *    在引擎盖下, 它首先匹配TokenType以防止NodePattern在匹配时陷入死循环.
  */
-export async function matchSequence<
+export function matchSequence<
   Sequence extends ReadonlyArray<Token | Node>
 , Token extends IToken = IToken
 , Node extends INode = INode
 >(
   patterns: MapSequenceToPatterns<Sequence, Token, Node>
 , tokens: ReadonlyArray<Token>
-): Promise<MapSequenceToMatches<Sequence, Token, Node> | Falsy> {
+): MapSequenceToMatches<Sequence, Token, Node> | Falsy {
   if (isTokenTypes(patterns)) {
     const matches: Array<Token> = []
 
@@ -54,7 +54,7 @@ export async function matchSequence<
 
     const mutableTokens = toArray(tokens)
     for (const pattern of patterns) {
-      const match = await consumeNode(pattern, mutableTokens)
+      const match = consumeNode(pattern, mutableTokens)
       if (isntFalsy(match)) {
         matches.push(match)
       } else {
@@ -70,7 +70,7 @@ export async function matchSequence<
       const indexOfToken of findAllIndexes(tokens, x => x.tokenType === tokenType)
     ) {
       const leftTokens = tokens.slice(0, indexOfToken)
-      const leftMatch = await nodePattern(leftTokens)
+      const leftMatch = nodePattern(leftTokens)
       if (
         isntFalsy(leftMatch) &&
         leftMatch.consumed === indexOfToken
@@ -86,7 +86,7 @@ export async function matchSequence<
     const matches: Array<INodePatternMatch<Node> | Token> = []
     const remainingTokens = toArray(tokens)
     for (const subPatterns of splitPatterns(patterns)) {
-      const subMatches = await matchSequence(
+      const subMatches = matchSequence(
         subPatterns as MapSequenceToPatterns<Sequence, Token, Node>
       , remainingTokens
       )

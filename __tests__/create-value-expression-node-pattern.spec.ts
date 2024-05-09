@@ -2,7 +2,7 @@ import { createValueExpressionNodePattern } from '@src/create-value-expression-n
 import { IToken } from '@src/types'
 
 describe('createValueExpressionNodePattern', () => {
-  test('matched', async () => {
+  test('matched', () => {
     const nodeType = 'Identifier'
     const valueTokenType = 'Name'
     const transformValue = (x: string) => `name:${x}`
@@ -18,7 +18,7 @@ describe('createValueExpressionNodePattern', () => {
       }
     ]
 
-    const result = await pattern(tokens)
+    const result = pattern(tokens)
 
     expect(result).toStrictEqual({
       consumed: 1
@@ -30,7 +30,7 @@ describe('createValueExpressionNodePattern', () => {
   })
 
   describe('not matched', () => {
-    test('tokens are less than needed', async () => {
+    test('tokens are less than needed', () => {
       const nodeType = 'Identifier'
       const valueTokenType = 'Name'
       const transformValue = (x: string) => `name:${x}`
@@ -41,12 +41,12 @@ describe('createValueExpressionNodePattern', () => {
       })
       const tokens: IToken[] = []
 
-      const result = await pattern(tokens)
+      const result = pattern(tokens)
 
       expect(result).toBe(undefined)
     })
 
-    test('token is not matched', async () => {
+    test('token is not matched', () => {
       const nodeType = 'Identifier'
       const valueTokenType = 'Name'
       const transformValue = (x: string) => `name:${x}`
@@ -62,7 +62,7 @@ describe('createValueExpressionNodePattern', () => {
         }
       ]
 
-      const result = await pattern(tokens)
+      const result = pattern(tokens)
 
       expect(result).toBe(undefined)
     })

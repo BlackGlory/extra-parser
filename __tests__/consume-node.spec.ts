@@ -2,7 +2,7 @@ import { consumeNode } from '@src/consume-node'
 import { IToken, INodePattern } from '@src/types'
 
 describe('consumeNode', () => {
-  test('consumed', async () => {
+  test('consumed', () => {
     const tokens: IToken[] = [{
       tokenType: 'ConsumableToken'
     , value: 'value'
@@ -19,7 +19,7 @@ describe('consumeNode', () => {
       }
     }
 
-    const result = await consumeNode(nodePattern, tokens)
+    const result = consumeNode(nodePattern, tokens)
 
     expect(tokens).toStrictEqual([])
     expect(result).toStrictEqual({
@@ -31,7 +31,7 @@ describe('consumeNode', () => {
     })
   })
 
-  test('not consumed', async () => {
+  test('not consumed', () => {
     const tokens: IToken[] = [{
       tokenType: 'UnconsumableToken'
     , value: 'value'
@@ -48,7 +48,7 @@ describe('consumeNode', () => {
       }
     }
 
-    const result = await consumeNode(nodePattern, tokens)
+    const result = consumeNode(nodePattern, tokens)
 
     expect(tokens).toStrictEqual([{
       tokenType: 'UnconsumableToken'

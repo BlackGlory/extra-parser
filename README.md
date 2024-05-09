@@ -8,17 +8,6 @@ npm install --save extra-parser
 yarn add extra-parser
 ```
 
-## FAQ
-### Why are functions asynchronous?
-Some parsers make heavy use of recursion,
-and most JavaScript engines do not support tail-call optimization,
-which leads to the possibility of stack overflow in programs.
-
-Asynchronous functions are an escape route:
-developers can change recursive functions to asynchronous recursive functions
-to get their programs out of stack overflow problems
-without significantly reducing readability.
-
 ## API
 ```ts
 interface IToken {
@@ -41,11 +30,11 @@ interface INodePatternMatch<Node extends INode> {
 }
 
 interface ITokenPattern<Token extends IToken = IToken> {
-  (text: string): Awaitable<ITokenPatternMatch<Token> | Falsy>
+  (text: string): ITokenPatternMatch<Token> | Falsy
 }
 
 interface INodePattern<Token extends IToken = IToken, Node extends INode = INode> {
-  (tokens: ReadonlyArray<Token>): Awaitable<INodePatternMatch<Node> | Falsy>
+  (tokens: ReadonlyArray<Token>): INodePatternMatch<Node> | Falsy
 }
 
 type MapSequenceToPatterns<
@@ -88,7 +77,7 @@ type MapSequenceToMatches<
 function tokenize<Token extends IToken = IToken>(
   patterns: Array<ITokenPattern<Token>>
 , text: string
-): AsyncIterableIterator<Token>
+): IterableIterator<Token>
 ```
 
 ### parse
@@ -96,7 +85,7 @@ function tokenize<Token extends IToken = IToken>(
 function parse<Token extends IToken = IToken, Node extends INode = INode>(
   patterns: Array<INodePattern<Token, Node>>
 , tokens: Token[]
-): AsyncIterableIterator<Node>
+): IterableIterator<Node>
 ```
 
 ### consumeNode
@@ -107,7 +96,7 @@ function consumeNode<
 >(
   nodePattern: INodePattern<Token, Node>
 , tokens: Token[]
-): Promise<INodePatternMatch<Node> | Falsy>
+): INodePatternMatch<Node> | Falsy
 ```
 
 ### consumeToken
@@ -126,7 +115,7 @@ function matchAnyOf<
 >(
   nodePatterns: ReadonlyArray<INodePattern<Token, Node>>
 , tokens: ReadonlyArray<Token>
-): Promise<INodePatternMatch<Node> | Falsy>
+): INodePatternMatch<Node> | Falsy
 ```
 
 ### matchSequence
@@ -138,7 +127,7 @@ function matchSequence<
 >(
   patterns: MapSequenceToPatterns<Sequence, Token, Node>
 , tokens: ReadonlyArray<Token>
-): Promise<MapSequenceToMatches<Sequence, Token, Node> | Falsy>
+): MapSequenceToMatches<Sequence, Token, Node> | Falsy
 ```
 
 ### matchRepetitions
@@ -154,7 +143,7 @@ function matchRepetitions<
     minimumRepetitions?: number = 1
     maximumRepetitions?: number = Infinity
   }
-): Promise<Array<Token | INodePatternMatch<Node>> | Falsy>
+): Array<Token | INodePatternMatch<Node>> | Falsy
 ```
 
 ### createTokenPatternFromRegExp

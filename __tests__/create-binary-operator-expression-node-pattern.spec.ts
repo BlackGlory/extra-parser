@@ -2,7 +2,7 @@ import { createBinaryOperatorExpressionNodePattern } from '@src/create-binary-op
 import { IToken, INodePattern } from '@src/types'
 
 describe('createBinaryOperatorExpressionNodePattern', () => {
-  test('matched', async () => {
+  test('matched', () => {
     const centerTokenType = 'And'
     const leftNodePattern: INodePattern = tokens => {
       if (tokens[0].tokenType === 'Reference') {
@@ -47,7 +47,7 @@ describe('createBinaryOperatorExpressionNodePattern', () => {
     , rightNodePattern
     })
 
-    const result = await pattern(tokens)
+    const result = pattern(tokens)
 
     expect(result).toStrictEqual({
       consumed: 3
@@ -66,7 +66,7 @@ describe('createBinaryOperatorExpressionNodePattern', () => {
   })
 
   describe('not matched', () => {
-    test('tokens are less than needed', async () => {
+    test('tokens are less than needed', () => {
       const centerTokenType = 'And'
       const leftNodePattern: INodePattern = tokens => {
         if (tokens[0].tokenType === 'Reference') {
@@ -98,12 +98,12 @@ describe('createBinaryOperatorExpressionNodePattern', () => {
       , rightNodePattern
       })
 
-      const result = await pattern(tokens)
+      const result = pattern(tokens)
 
       expect(result).toBe(undefined)
     })
 
-    test('left node is not matched', async () => {
+    test('left node is not matched', () => {
       const centerTokenType = 'And'
       const leftNodePattern: INodePattern = tokens => {
         if (tokens[0].tokenType === 'Reference') {
@@ -148,12 +148,12 @@ describe('createBinaryOperatorExpressionNodePattern', () => {
       , rightNodePattern
       })
 
-      const result = await pattern(tokens)
+      const result = pattern(tokens)
 
       expect(result).toBe(undefined)
     })
 
-    test('center token is not matched', async () => {
+    test('center token is not matched', () => {
       const centerTokenType = 'And'
       const leftNodePattern: INodePattern = tokens => {
         if (tokens[0].tokenType === 'Reference') {
@@ -198,12 +198,12 @@ describe('createBinaryOperatorExpressionNodePattern', () => {
       , rightNodePattern
       })
 
-      const result = await pattern(tokens)
+      const result = pattern(tokens)
 
       expect(result).toBe(undefined)
     })
 
-    test('right node is not matched', async () => {
+    test('right node is not matched', () => {
       const centerTokenType = 'And'
       const leftNodePattern: INodePattern = tokens => {
         if (tokens[0].tokenType === 'Reference') {
@@ -248,7 +248,7 @@ describe('createBinaryOperatorExpressionNodePattern', () => {
       , rightNodePattern
       })
 
-      const result = await pattern(tokens)
+      const result = pattern(tokens)
 
       expect(result).toBe(undefined)
     })

@@ -10,8 +10,8 @@ export function createGroupedExpressionNodePattern<
   rightTokenType: string
   centerNodePattern: INodePattern<Token, CenterNode>
 }): INodePattern<Token, CenterNode> {
-  return async tokens => {
-    const matches = await matchSequence<[IToken, INode, IToken]>(
+  return tokens => {
+    const matches = matchSequence<[IToken, INode, IToken]>(
       [
         leftTokenType
       , centerNodePattern as INodePattern<IToken, CenterNode>

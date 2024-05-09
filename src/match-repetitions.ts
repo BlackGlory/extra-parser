@@ -2,7 +2,7 @@ import { assert, Falsy, isntFalsy, toArray } from '@blackglory/prelude'
 import { IToken, INode, MapSequenceToPatterns, MapSequenceToMatches, INodePatternMatch } from './types'
 import { matchSequence } from './match-sequence'
 
-export async function matchRepetitions<
+export function matchRepetitions<
   Sequence extends ReadonlyArray<Token | Node>
 , Token extends IToken = IToken
 , Node extends INode = INode
@@ -16,7 +16,7 @@ export async function matchRepetitions<
     minimumRepetitions?: number
     maximumRepetitions?: number
   } = {}
-): Promise<Array<Token | INodePatternMatch<Node>> | Falsy> {
+): Array<Token | INodePatternMatch<Node>> | Falsy {
   assert(Number.isInteger(minimumRepetitions), 'The minimum repetiions must be an integer')
   assert(
     minimumRepetitions >= 0
@@ -35,7 +35,7 @@ export async function matchRepetitions<
   const mutableTokens = toArray(tokens)
 
   for (let i = 0; i < minimumRepetitions; i++) {
-    const matches = await matchSequence(patterns, mutableTokens)
+    const matches = matchSequence(patterns, mutableTokens)
     if (isntFalsy(matches)) {
       handleMatches(matches)
     } else {
@@ -44,7 +44,7 @@ export async function matchRepetitions<
   }
 
   for (let i = minimumRepetitions; i < maximumRepetitions; i++) {
-    const matches = await matchSequence(patterns, mutableTokens)
+    const matches = matchSequence(patterns, mutableTokens)
     if (isntFalsy(matches)) {
       handleMatches(matches)
     } else {

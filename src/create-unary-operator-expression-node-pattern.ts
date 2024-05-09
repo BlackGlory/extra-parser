@@ -22,8 +22,8 @@ export function createUnaryOperatorExpressionNodePattern<
   Token
 , IUnaryOperatorExpressionNode<Node['nodeType'], Node['right']>
 > {
-  return async tokens => {
-    const matches = await matchSequence<[IToken, INode]>(
+  return tokens => {
+    const matches = matchSequence<[IToken, INode]>(
       [
         leftTokenType
       , rightNodePattern as INodePattern<IToken, RightNode>

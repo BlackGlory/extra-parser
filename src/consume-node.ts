@@ -6,14 +6,14 @@ import { IToken, INode, INodePattern, INodePatternMatch } from './types'
  * 
  * @param tokens 匹配成功时会发生原地修改
  */
-export async function consumeNode<
+export function consumeNode<
   Token extends IToken = IToken
 , Node extends INode = INode
 >(
   nodePattern: INodePattern<Token, Node>
 , tokens: Token[]
-): Promise<INodePatternMatch<Node> | Falsy> {
-  const match = await nodePattern(tokens)
+): INodePatternMatch<Node> | Falsy {
+  const match = nodePattern(tokens)
 
   if (isntFalsy(match)) {
     tokens.splice(0, match.consumed)

@@ -2,7 +2,7 @@ import { matchAnyOf } from '@src/match-any-of'
 import { IToken, INodePattern } from '@src/types'
 
 describe('matchAnyOf', () => {
-  test('matched', async () => {
+  test('matched', () => {
     const nodePatterns: INodePattern[] = [
       jest.fn().mockReturnValue(false)
     , jest.fn(tokens => {
@@ -25,7 +25,7 @@ describe('matchAnyOf', () => {
       }
     ]
 
-    const result = await matchAnyOf(nodePatterns, tokens)
+    const result = matchAnyOf(nodePatterns, tokens)
 
     expect(result).toStrictEqual({
       consumed: 1
@@ -39,7 +39,7 @@ describe('matchAnyOf', () => {
     expect(nodePatterns[2]).not.toBeCalled()
   })
 
-  test('not matched', async () => {
+  test('not matched', () => {
     const nodePatterns: INodePattern[] = [
       jest.fn().mockReturnValue(false)
     , jest.fn(tokens => {
@@ -62,7 +62,7 @@ describe('matchAnyOf', () => {
       }
     ]
 
-    const result = await matchAnyOf(nodePatterns, tokens)
+    const result = matchAnyOf(nodePatterns, tokens)
 
     expect(result).toBe(undefined)
     expect(nodePatterns[0]).toBeCalledTimes(1)

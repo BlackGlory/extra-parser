@@ -2,7 +2,7 @@ import { matchRepetitions } from '@src/match-repetitions'
 import { INodePattern, IToken } from '@src/types'
 
 describe('matchRepetitions', () => {
-  test('tokens as patterns', async () => {
+  test('tokens as patterns', () => {
     const patterns = ['Token']
     const tokens: IToken[] = [
       {
@@ -11,7 +11,7 @@ describe('matchRepetitions', () => {
       }
     ]
 
-    const result = await matchRepetitions(patterns, tokens)
+    const result = matchRepetitions(patterns, tokens)
 
     expect(result).toStrictEqual([
       {
@@ -21,7 +21,7 @@ describe('matchRepetitions', () => {
     ])
   })
 
-  test('node patterns', async () => {
+  test('node patterns', () => {
     const patterns: INodePattern[] = [
       tokens => {
         if (
@@ -54,7 +54,7 @@ describe('matchRepetitions', () => {
       }
     ]
 
-    const result = await matchRepetitions(patterns, tokens)
+    const result = matchRepetitions(patterns, tokens)
 
     expect(result).toStrictEqual([
       {
@@ -68,7 +68,7 @@ describe('matchRepetitions', () => {
   })
 
   describe('minimumRepetitions', () => {
-    test('matches are greater than or equal to minimum repetitions', async () => {
+    test('matches are greater than or equal to minimum repetitions', () => {
       const patterns = ['Token']
       const tokens: IToken[] = [
         {
@@ -77,7 +77,7 @@ describe('matchRepetitions', () => {
         }
       ]
 
-      const result = await matchRepetitions(patterns, tokens, {
+      const result = matchRepetitions(patterns, tokens, {
         minimumRepetitions: 1
       })
 
@@ -89,7 +89,7 @@ describe('matchRepetitions', () => {
       ])
     })
 
-    test('matches are less than minimum repetitions', async () => {
+    test('matches are less than minimum repetitions', () => {
       const patterns = ['Token']
       const tokens: IToken[] = [
         {
@@ -98,7 +98,7 @@ describe('matchRepetitions', () => {
         }
       ]
 
-      const result = await matchRepetitions(patterns, tokens, {
+      const result = matchRepetitions(patterns, tokens, {
         minimumRepetitions: 2
       })
 
@@ -107,7 +107,7 @@ describe('matchRepetitions', () => {
   })
 
   describe('maximumRepetitions', () => {
-    test('matches are less than or equal to maximum repetitions', async () => {
+    test('matches are less than or equal to maximum repetitions', () => {
       const patterns = ['Token']
       const tokens: IToken[] = [
         {
@@ -116,7 +116,7 @@ describe('matchRepetitions', () => {
         }
       ]
 
-      const result = await matchRepetitions(patterns, tokens, {
+      const result = matchRepetitions(patterns, tokens, {
         maximumRepetitions: 1
       })
 
@@ -128,7 +128,7 @@ describe('matchRepetitions', () => {
       ])
     })
 
-    test('matches are greater than maxmium repetitions', async () => {
+    test('matches are greater than maxmium repetitions', () => {
       const patterns = ['Token']
       const tokens: IToken[] = [
         {
@@ -141,7 +141,7 @@ describe('matchRepetitions', () => {
         }
       ]
 
-      const result = await matchRepetitions(patterns, tokens, {
+      const result = matchRepetitions(patterns, tokens, {
         maximumRepetitions: 1
       })
 
