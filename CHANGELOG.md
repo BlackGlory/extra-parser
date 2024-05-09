@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/BlackGlory/extra-parser/compare/v0.6.6...v0.7.0) (2024-05-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* async => sync for performance
+
+* async => sync for performance ([95afa20](https://github.com/BlackGlory/extra-parser/commit/95afa20a216b33ccff0f802b5f1528bd2b6d71f4))
+
 ### [0.6.6](https://github.com/BlackGlory/extra-parser/compare/v0.6.5...v0.6.6) (2023-08-20)
 
 
