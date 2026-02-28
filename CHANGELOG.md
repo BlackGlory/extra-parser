@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.1](https://github.com/BlackGlory/extra-parser/compare/v0.7.0...v0.7.1) (2026-02-28)
+
+
+### Bug Fixes
+
+* **create-token-pattern-from-regexp:** handle an edge case related to empty character matching ([267956c](https://github.com/BlackGlory/extra-parser/commit/267956cbc1f0ab19eae4382aeec8390510367815))
+
 ## [0.7.0](https://github.com/BlackGlory/extra-parser/compare/v0.6.6...v0.7.0) (2024-05-09)
 
 
