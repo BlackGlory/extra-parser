@@ -1,4 +1,3 @@
-import { isntFalsy } from '@blackglory/prelude'
 import { ITokenPattern, IToken } from './types'
 
 export function* tokenize<Token extends IToken = IToken>(
@@ -11,7 +10,7 @@ export function* tokenize<Token extends IToken = IToken>(
 
     for (const pattern of patterns) {
       const result = pattern(remainingText)
-      if (isntFalsy(result)) {
+      if (result) {
         yield result.token
         i += result.consumed
         continue loop

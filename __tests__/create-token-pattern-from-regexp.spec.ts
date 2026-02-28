@@ -55,4 +55,15 @@ describe('createTokenPatternFromRegExp', () => {
     expect(result(' a')).toBeFalsy()
     expect(result('')).toBeFalsy()
   })
+
+  test('edge: empty character match', () => {
+    const tokenType = 'Alphabet'
+    const regExp = /[a-bA-B]{0}/
+
+    const result = createTokenPatternFromRegExp(tokenType, regExp)
+
+    expect(isFunction(result)).toBe(true)
+    expect(result('a')).toBeFalsy()
+    expect(result('')).toBeFalsy()
+  })
 })

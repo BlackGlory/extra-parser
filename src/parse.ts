@@ -1,4 +1,3 @@
-import { isntFalsy } from '@blackglory/prelude'
 import { IToken, INodePattern, INode } from './types'
 
 export function* parse<
@@ -14,7 +13,7 @@ export function* parse<
 
     for (const pattern of patterns) {
       const result = pattern(remainingTokens)
-      if (isntFalsy(result)) {
+      if (result) {
         yield result.node
         i += result.consumed
         continue loop

@@ -11,16 +11,19 @@ export function createTokenPatternFromRegExp<Token extends IToken>(
     const result = startsWithRegExp.exec(text)
     if (isntNull(result)) {
       const [matchedText] = result
-      return {
-        consumed: matchedText.length
-      , token: {
-          tokenType: tokenType
-        , value: matchedText
+
+      if (matchedText) {
+        return {
+          consumed: matchedText.length
+        , token: {
+            tokenType: tokenType
+          , value: matchedText
+          }
         }
       }
-    } else {
-      return false
     }
+
+    return false
   }
 }
 

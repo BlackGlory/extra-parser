@@ -1,4 +1,4 @@
-import { Falsy, isntFalsy } from '@blackglory/prelude'
+import { Falsy } from '@blackglory/prelude'
 import { IToken, INode, INodePattern, INodePatternMatch } from './types'
 
 /**
@@ -15,7 +15,7 @@ export function consumeNode<
 ): INodePatternMatch<Node> | Falsy {
   const match = nodePattern(tokens)
 
-  if (isntFalsy(match)) {
+  if (match) {
     tokens.splice(0, match.consumed)
     return match
   }
